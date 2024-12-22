@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProgramSettingsDialog</class>
+ <widget class="QWidget" name="ProgramSettingsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>181</width>
+    <height>270</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>程序设置</string>
+  </property>
+  <widget class="QPushButton" name="ChangeDirButton">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>141</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>更改各种路径</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="MultiThreadCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>90</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>启用多线程</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="staticLabel1">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>120</y>
+     <width>101</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>线程上限：</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="ThreadLimitSpinBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>150</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>-1</number>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="OverwriteDRTDataCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>190</y>
+     <width>141</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>是否总是覆盖DRT数据</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>220</y>
+     <width>158</width>
+     <height>42</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="ButtomButtons">
+    <item>
+     <widget class="QPushButton" name="CloseButton">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>关闭</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="SaveSettingsButton">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>保存设置</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>ChangeDirButton</tabstop>
+  <tabstop>MultiThreadCheckBox</tabstop>
+  <tabstop>ThreadLimitSpinBox</tabstop>
+  <tabstop>OverwriteDRTDataCheckBox</tabstop>
+  <tabstop>CloseButton</tabstop>
+  <tabstop>SaveSettingsButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>ChangeDirButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProgramSettingsDialog</receiver>
+   <slot>changeDirButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>132</x>
+     <y>47</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>180</x>
+     <y>48</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ThreadLimitSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ProgramSettingsDialog</receiver>
+   <slot>threadLimitChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>48</x>
+     <y>157</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>180</x>
+     <y>161</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>MultiThreadCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProgramSettingsDialog</receiver>
+   <slot>multiThreadCheckBoxChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>180</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>OverwriteDRTDataCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProgramSettingsDialog</receiver>
+   <slot>overwriteDRTDataChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>106</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>180</x>
+     <y>205</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CloseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProgramSettingsDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>244</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-6</x>
+     <y>240</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>SaveSettingsButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProgramSettingsDialog</receiver>
+   <slot>saveSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>133</x>
+     <y>230</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>182</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>changeDirButtonClicked()</slot>
+  <slot>multiThreadCheckBoxChanged()</slot>
+  <slot>threadLimitChanged()</slot>
+  <slot>overwriteDRTDataChanged()</slot>
+  <slot>saveSettings()</slot>
+ </slots>
+</ui>

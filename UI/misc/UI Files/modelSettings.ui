@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ModelSettings</class>
+ <widget class="QWidget" name="ModelSettings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>模型编辑器</string>
+  </property>
+  <widget class="QLabel" name="ModelSettingDataNameLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>291</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>*插入数据名称*:</string>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QFrame" name="ModelSettingFrame">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>80</y>
+     <width>591</width>
+     <height>451</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Sunken</enum>
+   </property>
+  </widget>
+  <widget class="QScrollArea" name="ModelSettingScrollArea">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>10</y>
+     <width>171</width>
+     <height>521</height>
+    </rect>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Sunken</enum>
+   </property>
+   <property name="widgetResizable">
+    <bool>true</bool>
+   </property>
+   <widget class="QWidget" name="ModelSettingScrollAreaContents">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>169</width>
+      <height>519</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="layoutWidget_5">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>530</y>
+     <width>271</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="ModelSettingBottomButtons">
+    <item>
+     <widget class="QPushButton" name="ModelSettingBackButton">
+      <property name="minimumSize">
+       <size>
+        <width>130</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>不保存返回</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="ModelSettingSaveButton">
+      <property name="minimumSize">
+       <size>
+        <width>130</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>保存</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget_6">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>540</y>
+     <width>151</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="ModelSettingSwitchDataButtons">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QToolButton" name="ModelSettingPreviousDataButton">
+      <property name="minimumSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>30</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="arrowType">
+       <enum>Qt::LeftArrow</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="staticLabel">
+      <property name="text">
+       <string>切换数据</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QToolButton" name="ModelSettingNextDataButton">
+      <property name="minimumSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>30</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="arrowType">
+       <enum>Qt::RightArrow</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>10</y>
+     <width>291</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="ModelSettingTopButtons">
+    <property name="spacing">
+     <number>3</number>
+    </property>
+    <item>
+     <layout class="QVBoxLayout" name="ModelSettingTopLeftButtons">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="ModelSettingChangeCircuitNameButton">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>更改电路名称</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ModelSettingClearAllComponentsBotton">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>清空组件</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="ModelSettingTopRightLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QComboBox" name="ModelSettingDiagramComboBox">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="ModelSettingTopBottomRightButtons">
+        <item>
+         <widget class="QPushButton" name="CreateNewCircuitButton">
+          <property name="text">
+           <string>新建电路图</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="ModelSettingApplyToAllDataButton">
+          <property name="text">
+           <string>应用到全部数据</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>ModelSettingDiagramComboBox</tabstop>
+  <tabstop>CreateNewCircuitButton</tabstop>
+  <tabstop>ModelSettingApplyToAllDataButton</tabstop>
+  <tabstop>ModelSettingChangeCircuitNameButton</tabstop>
+  <tabstop>ModelSettingClearAllComponentsBotton</tabstop>
+  <tabstop>ModelSettingScrollArea</tabstop>
+  <tabstop>ModelSettingPreviousDataButton</tabstop>
+  <tabstop>ModelSettingNextDataButton</tabstop>
+  <tabstop>ModelSettingBackButton</tabstop>
+  <tabstop>ModelSettingSaveButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>ModelSettingDiagramComboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>ModelSettings</receiver>
+   <slot>modelSettingDiagramComboBoxChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>560</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>557</x>
+     <y>-13</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ModelSettingPreviousDataButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ModelSettings</receiver>
+   <slot>modelSettingPreviousDataButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>249</x>
+     <y>565</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>607</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ModelSettingNextDataButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ModelSettings</receiver>
+   <slot>modelSettingNextDataButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>360</x>
+     <y>562</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>365</x>
+     <y>606</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ModelSettingBackButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ModelSettings</receiver>
+   <slot>modelSettingBackButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>572</x>
+     <y>564</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>601</x>
+     <y>604</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ModelSettingSaveButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ModelSettings</receiver>
+   <slot>modelSettingSaveButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>684</x>
+     <y>553</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>805</x>
+     <y>555</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ModelSettingApplyToAllDataButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ModelSettings</receiver>
+   <slot>modelSettingApplyToAllDataButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>607</x>
+     <y>65</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>388</x>
+     <y>-24</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ModelSettingChangeCircuitNameButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ModelSettings</receiver>
+   <slot>modelSettingChangeCircuitNameButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>356</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>181</x>
+     <y>-13</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ModelSettingClearAllComponentsBotton</sender>
+   <signal>clicked()</signal>
+   <receiver>ModelSettings</receiver>
+   <slot>modelSettingClearAllComponentsButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>375</x>
+     <y>50</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>275</x>
+     <y>-5</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CreateNewCircuitButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ModelSettings</receiver>
+   <slot>createNewCircuitButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>467</x>
+     <y>55</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>422</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>modelSettingDiagramComboBoxChanged()</slot>
+  <slot>modelSettingPreviousDataButtonClicked()</slot>
+  <slot>modelSettingNextDataButtonClicked()</slot>
+  <slot>modelSettingBackButtonClicked()</slot>
+  <slot>modelSettingSaveButtonClicked()</slot>
+  <slot>modelSettingApplyToAllDataButtonClicked()</slot>
+  <slot>modelSettingChangeCircuitNameButtonClicked()</slot>
+  <slot>modelSettingClearAllComponentsButtonClicked()</slot>
+  <slot>createNewCircuitButtonClicked()</slot>
+ </slots>
+</ui>

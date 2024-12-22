@@ -1,0 +1,8 @@
+numpy
+scipy
+lmfit
+sympy
+matplotlib
+schemdraw
+PyQt6
+send2trash

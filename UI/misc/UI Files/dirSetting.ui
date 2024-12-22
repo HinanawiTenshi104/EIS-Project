@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DirSettingDialog</class>
+ <widget class="QDialog" name="DirSettingDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>380</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>路径设置</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>381</width>
+     <height>301</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="DirInputLayout">
+    <property name="spacing">
+     <number>40</number>
+    </property>
+    <item>
+     <layout class="QVBoxLayout" name="dataInputLayout">
+      <property name="spacing">
+       <number>20</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="dataDirLabel">
+        <property name="font">
+         <font>
+          <family>黑体</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>实验数据路径：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="dataDirInputLayout">
+        <property name="spacing">
+         <number>7</number>
+        </property>
+        <item>
+         <widget class="QLineEdit" name="dataDirLineEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>350</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="dataDirInputButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>黑体</family>
+            <pointsize>9</pointsize>
+            <italic>false</italic>
+            <bold>true</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+            <kerning>true</kerning>
+           </font>
+          </property>
+          <property name="text">
+           <string>.
+.
+.</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="DRTDataInputLayout">
+      <property name="spacing">
+       <number>20</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="DRTDataDirLabel">
+        <property name="font">
+         <font>
+          <family>黑体</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>DRT数据路径：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="DRTDataDirInputLayout">
+        <property name="spacing">
+         <number>7</number>
+        </property>
+        <item>
+         <widget class="QLineEdit" name="DRTDataDirLineEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>350</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="DRTDataDirInputButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>黑体</family>
+            <pointsize>9</pointsize>
+            <italic>false</italic>
+            <bold>true</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+            <kerning>true</kerning>
+           </font>
+          </property>
+          <property name="text">
+           <string>.
+.
+.</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="resultInputLayout">
+      <property name="spacing">
+       <number>20</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="resultDirLabel">
+        <property name="font">
+         <font>
+          <family>黑体</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>程序输出路径：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="resultDirInputLayout">
+        <property name="spacing">
+         <number>7</number>
+        </property>
+        <item>
+         <widget class="QLineEdit" name="resultDirLineEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>350</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="resultDirInputButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>黑体</family>
+            <pointsize>9</pointsize>
+            <italic>false</italic>
+            <bold>true</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+            <kerning>true</kerning>
+           </font>
+          </property>
+          <property name="text">
+           <string>.
+.
+.</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>330</y>
+     <width>231</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="bottomButtons">
+    <item>
+     <widget class="QPushButton" name="saveButton">
+      <property name="text">
+       <string>保存配置</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="cancelButton">
+      <property name="text">
+       <string>返回</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>dataDirLineEdit</tabstop>
+  <tabstop>dataDirInputButton</tabstop>
+  <tabstop>DRTDataDirLineEdit</tabstop>
+  <tabstop>DRTDataDirInputButton</tabstop>
+  <tabstop>resultDirLineEdit</tabstop>
+  <tabstop>resultDirInputButton</tabstop>
+  <tabstop>saveButton</tabstop>
+  <tabstop>cancelButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>dataDirInputButton</sender>
+   <signal>clicked()</signal>
+   <receiver>DirSettingDialog</receiver>
+   <slot>inputDataDir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>178</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>360</x>
+     <y>64</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>DRTDataDirInputButton</sender>
+   <signal>clicked()</signal>
+   <receiver>DirSettingDialog</receiver>
+   <slot>inputDRTDataDir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>288</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>366</x>
+     <y>202</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>resultDirInputButton</sender>
+   <signal>clicked()</signal>
+   <receiver>DirSettingDialog</receiver>
+   <slot>inputResultDir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>359</x>
+     <y>336</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>saveButton</sender>
+   <signal>clicked()</signal>
+   <receiver>DirSettingDialog</receiver>
+   <slot>saveDirs()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>473</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>129</x>
+     <y>415</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cancelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>DirSettingDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>321</x>
+     <y>470</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>282</x>
+     <y>418</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataDirLineEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>DirSettingDialog</receiver>
+   <slot>readLineEdits()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>53</x>
+     <y>171</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-5</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>DRTDataDirLineEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>DirSettingDialog</receiver>
+   <slot>readLineEdits()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-4</x>
+     <y>277</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>resultDirLineEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>DirSettingDialog</receiver>
+   <slot>readLineEdits()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>87</x>
+     <y>390</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-2</x>
+     <y>385</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>inputDataDir()</slot>
+  <slot>inputDRTDataDir()</slot>
+  <slot>inputResultDir()</slot>
+  <slot>saveDirs()</slot>
+  <slot>inputDRTToolDir()</slot>
+  <slot>readLineEdits()</slot>
+ </slots>
+</ui>
