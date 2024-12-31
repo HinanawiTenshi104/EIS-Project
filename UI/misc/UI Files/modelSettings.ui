@@ -35,23 +35,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QFrame" name="ModelSettingFrame">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>80</y>
-     <width>591</width>
-     <height>451</height>
-    </rect>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Sunken</enum>
-   </property>
-  </widget>
-  <widget class="QScrollArea" name="ModelSettingScrollArea">
+  <widget class="QScrollArea" name="ModelSettingComponentScrollArea">
    <property name="geometry">
     <rect>
      <x>620</x>
@@ -66,7 +50,7 @@
    <property name="widgetResizable">
     <bool>true</bool>
    </property>
-   <widget class="QWidget" name="ModelSettingScrollAreaContents">
+   <widget class="QWidget" name="ModelSettingComponentScrollAreaContents">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -267,6 +251,42 @@
     </item>
    </layout>
   </widget>
+  <widget class="QLabel" name="InfoLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>75</y>
+     <width>601</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>https://www.youtube.com/watch?v=K1eE7fvQbEE</string>
+   </property>
+  </widget>
+  <widget class="QScrollArea" name="ModelSettingDiagramScrollArea">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>100</y>
+     <width>601</width>
+     <height>431</height>
+    </rect>
+   </property>
+   <property name="widgetResizable">
+    <bool>true</bool>
+   </property>
+   <widget class="QWidget" name="ModelSettingDiagramScrollAreaContents">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>599</width>
+      <height>429</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>ModelSettingDiagramComboBox</tabstop>
@@ -274,7 +294,8 @@
   <tabstop>ModelSettingApplyToAllDataButton</tabstop>
   <tabstop>ModelSettingChangeCircuitNameButton</tabstop>
   <tabstop>ModelSettingClearAllComponentsBotton</tabstop>
-  <tabstop>ModelSettingScrollArea</tabstop>
+  <tabstop>ModelSettingDiagramScrollArea</tabstop>
+  <tabstop>ModelSettingComponentScrollArea</tabstop>
   <tabstop>ModelSettingPreviousDataButton</tabstop>
   <tabstop>ModelSettingNextDataButton</tabstop>
   <tabstop>ModelSettingBackButton</tabstop>

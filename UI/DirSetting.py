@@ -9,6 +9,7 @@ class DirSettingDialog(object):
 
     dirs = {
         "Data Dir": "",
+        "Processed Data Dir": "",
         "DRT Data Dir": "",
         "Result Dir": "",
     }
@@ -16,7 +17,7 @@ class DirSettingDialog(object):
 
     def setupUi(self, DirSettingDialog):
         DirSettingDialog.setObjectName("DirSettingDialog")
-        DirSettingDialog.resize(400, 380)
+        DirSettingDialog.resize(400, 480)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed
         )
@@ -25,7 +26,7 @@ class DirSettingDialog(object):
         sizePolicy.setHeightForWidth(DirSettingDialog.sizePolicy().hasHeightForWidth())
         DirSettingDialog.setSizePolicy(sizePolicy)
         self.layoutWidget = QtWidgets.QWidget(parent=DirSettingDialog)
-        self.layoutWidget.setGeometry(QtCore.QRect(10, 20, 381, 301))
+        self.layoutWidget.setGeometry(QtCore.QRect(10, 20, 381, 402))
         self.layoutWidget.setObjectName("layoutWidget")
         self.DirInputLayout = QtWidgets.QVBoxLayout(self.layoutWidget)
         self.DirInputLayout.setContentsMargins(0, 0, 0, 0)
@@ -81,6 +82,58 @@ class DirSettingDialog(object):
         self.dataDirInputLayout.addWidget(self.dataDirInputButton)
         self.dataInputLayout.addLayout(self.dataDirInputLayout)
         self.DirInputLayout.addLayout(self.dataInputLayout)
+        self.processedDataInputLayout = QtWidgets.QVBoxLayout()
+        self.processedDataInputLayout.setSpacing(20)
+        self.processedDataInputLayout.setObjectName("processedDataInputLayout")
+        self.processedDataDirLabel = QtWidgets.QLabel(parent=self.layoutWidget)
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(12)
+        self.processedDataDirLabel.setFont(font)
+        self.processedDataDirLabel.setObjectName("processedDataDirLabel")
+        self.processedDataInputLayout.addWidget(self.processedDataDirLabel)
+        self.processedDataDirInputLayout = QtWidgets.QHBoxLayout()
+        self.processedDataDirInputLayout.setSpacing(7)
+        self.processedDataDirInputLayout.setObjectName("processedDataDirInputLayout")
+        self.processedDataDirLineEdit = QtWidgets.QLineEdit(parent=self.layoutWidget)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.processedDataDirLineEdit.sizePolicy().hasHeightForWidth()
+        )
+        self.processedDataDirLineEdit.setSizePolicy(sizePolicy)
+        self.processedDataDirLineEdit.setMinimumSize(QtCore.QSize(350, 30))
+        self.processedDataDirLineEdit.setMaximumSize(QtCore.QSize(350, 16777215))
+        self.processedDataDirLineEdit.setObjectName("processedDataDirLineEdit")
+        self.processedDataDirInputLayout.addWidget(self.processedDataDirLineEdit)
+        self.processedDataDirInputButton = QtWidgets.QPushButton(
+            parent=self.layoutWidget
+        )
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Ignored, QtWidgets.QSizePolicy.Policy.Ignored
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.processedDataDirInputButton.sizePolicy().hasHeightForWidth()
+        )
+        self.processedDataDirInputButton.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(9)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setUnderline(False)
+        font.setStrikeOut(False)
+        font.setKerning(True)
+        self.processedDataDirInputButton.setFont(font)
+        self.processedDataDirInputButton.setObjectName("processedDataDirInputButton")
+        self.processedDataDirInputLayout.addWidget(self.processedDataDirInputButton)
+        self.processedDataInputLayout.addLayout(self.processedDataDirInputLayout)
+        self.DirInputLayout.addLayout(self.processedDataInputLayout)
         self.DRTDataInputLayout = QtWidgets.QVBoxLayout()
         self.DRTDataInputLayout.setSpacing(20)
         self.DRTDataInputLayout.setObjectName("DRTDataInputLayout")
@@ -183,7 +236,7 @@ class DirSettingDialog(object):
         self.resultInputLayout.addLayout(self.resultDirInputLayout)
         self.DirInputLayout.addLayout(self.resultInputLayout)
         self.layoutWidget1 = QtWidgets.QWidget(parent=DirSettingDialog)
-        self.layoutWidget1.setGeometry(QtCore.QRect(160, 330, 231, 41))
+        self.layoutWidget1.setGeometry(QtCore.QRect(160, 430, 231, 41))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.bottomButtons = QtWidgets.QHBoxLayout(self.layoutWidget1)
         self.bottomButtons.setContentsMargins(0, 0, 0, 0)
@@ -204,9 +257,19 @@ class DirSettingDialog(object):
         self.dataDirLineEdit.editingFinished.connect(DirSettingDialog.readLineEdits)  # type: ignore
         self.DRTDataDirLineEdit.editingFinished.connect(DirSettingDialog.readLineEdits)  # type: ignore
         self.resultDirLineEdit.editingFinished.connect(DirSettingDialog.readLineEdits)  # type: ignore
+        self.processedDataDirInputButton.clicked.connect(DirSettingDialog.inputProcessedDataDir)  # type: ignore
+        self.processedDataDirLineEdit.editingFinished.connect(DirSettingDialog.readLineEdits)  # type: ignore
         QtCore.QMetaObject.connectSlotsByName(DirSettingDialog)
         DirSettingDialog.setTabOrder(self.dataDirLineEdit, self.dataDirInputButton)
-        DirSettingDialog.setTabOrder(self.dataDirInputButton, self.DRTDataDirLineEdit)
+        DirSettingDialog.setTabOrder(
+            self.dataDirInputButton, self.processedDataDirLineEdit
+        )
+        DirSettingDialog.setTabOrder(
+            self.processedDataDirLineEdit, self.processedDataDirInputButton
+        )
+        DirSettingDialog.setTabOrder(
+            self.processedDataDirInputButton, self.DRTDataDirLineEdit
+        )
         DirSettingDialog.setTabOrder(
             self.DRTDataDirLineEdit, self.DRTDataDirInputButton
         )
@@ -220,6 +283,12 @@ class DirSettingDialog(object):
         DirSettingDialog.setWindowTitle(_translate("DirSettingDialog", "路径设置"))
         self.dataDirLabel.setText(_translate("DirSettingDialog", "实验数据路径："))
         self.dataDirInputButton.setText(_translate("DirSettingDialog", ".\n" ".\n" "."))
+        self.processedDataDirLabel.setText(
+            _translate("DirSettingDialog", "预处理后数据路径：")
+        )
+        self.processedDataDirInputButton.setText(
+            _translate("DirSettingDialog", ".\n" ".\n" ".")
+        )
         self.DRTDataDirLabel.setText(_translate("DirSettingDialog", "DRT数据路径："))
         self.DRTDataDirInputButton.setText(
             _translate("DirSettingDialog", ".\n" ".\n" ".")
@@ -235,9 +304,10 @@ class DirSettingDialog(object):
         self.readDirs()
 
     def updateDirTexts(self):
-        dataDir, DRTDataDir, resultDir = self.dirs.values()
+        dataDir, processedDataDir, DRTDataDir, resultDir = self.dirs.values()
 
         self.dataDirLineEdit.setText(dataDir)
+        self.processedDataDirLineEdit.setText(processedDataDir)
         self.DRTDataDirLineEdit.setText(DRTDataDir)
         self.resultDirLineEdit.setText(resultDir)
 
@@ -269,6 +339,10 @@ class DirSettingDialog(object):
         self.dirs["Data Dir"] = self.inputDir()
         self.dataDirLineEdit.setText(self.dirs["Data Dir"])
 
+    def inputProcessedDataDir(self):
+        self.dirs["Processed Data Dir"] = self.inputDir()
+        self.processedDataDirLineEdit.setText(self.dirs["Processed Data Dir"])
+
     def inputDRTDataDir(self):
         self.dirs["DRT Data Dir"] = self.inputDir()
         self.DRTDataDirLineEdit.setText(self.dirs["DRT Data Dir"])
@@ -279,9 +353,9 @@ class DirSettingDialog(object):
 
     def readLineEdits(self):
         self.dirs["Data Dir"] = self.dataDirLineEdit.text()
+        self.dirs["Processed Data Dir"] = self.processedDataDirLineEdit.text()
         self.dirs["DRT Data Dir"] = self.DRTDataDirLineEdit.text()
         self.dirs["Result Dir"] = self.resultDirLineEdit.text()
-        self.dirs["DRT Tool Dir"] = self.DRTToolDirLineEdit.text()
 
 
 class DirSettingDialog(QtWidgets.QDialog, DirSettingDialog):

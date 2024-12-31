@@ -2,17 +2,12 @@ import configparser
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-import DataProcessor
-import DrawDiagram
-
 configsDir = QtCore.QDir.currentPath() + r"/configs/"
 configFileName = "Preprocess Setting.ini"
 configFilePath = configsDir + configFileName
 
 
 class PreprocessSettingDialog(object):
-    diagramTemplatePath = ""
-
     invaildRead = False
 
     preprocessorSwitch = []
@@ -22,19 +17,13 @@ class PreprocessSettingDialog(object):
     interpolaterOptions = []
     smootherOptions = []
     downSamplerOptions = []
-
     preprocessorInfo = []
-    preprocessorInfoSignal = QtCore.pyqtSignal(list)
 
-    dataIndex = None
-    ogdatas = []
-    dataNames = []
-    processedDatas = []
-    processedDatasSignal = QtCore.pyqtSignal(list)
+    preprocessorInfoSignal = QtCore.pyqtSignal(list)
 
     def setupUi(self, PreprocessSettingDialog):
         PreprocessSettingDialog.setObjectName("PreprocessSettingDialog")
-        PreprocessSettingDialog.resize(922, 480)
+        PreprocessSettingDialog.resize(540, 480)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed
         )
@@ -45,7 +34,7 @@ class PreprocessSettingDialog(object):
         )
         PreprocessSettingDialog.setSizePolicy(sizePolicy)
         self.layoutWidget = QtWidgets.QWidget(parent=PreprocessSettingDialog)
-        self.layoutWidget.setGeometry(QtCore.QRect(10, 10, 511, 77))
+        self.layoutWidget.setGeometry(QtCore.QRect(10, 10, 521, 81))
         self.layoutWidget.setObjectName("layoutWidget")
         self.preprocessSwitchLayout = QtWidgets.QVBoxLayout(self.layoutWidget)
         self.preprocessSwitchLayout.setContentsMargins(0, 0, 0, 0)
@@ -116,7 +105,7 @@ class PreprocessSettingDialog(object):
         self.preprocessSwitchTable.verticalHeader().setDefaultSectionSize(30)
         self.preprocessSwitchLayout.addWidget(self.preprocessSwitchTable)
         self.layoutWidget1 = QtWidgets.QWidget(parent=PreprocessSettingDialog)
-        self.layoutWidget1.setGeometry(QtCore.QRect(10, 102, 511, 361))
+        self.layoutWidget1.setGeometry(QtCore.QRect(10, 102, 521, 361))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.OptionsLayout = QtWidgets.QFormLayout(self.layoutWidget1)
         self.OptionsLayout.setContentsMargins(0, 0, 0, 0)
@@ -432,70 +421,11 @@ class PreprocessSettingDialog(object):
         self.OptionsLayout.setLayout(
             2, QtWidgets.QFormLayout.ItemRole.FieldRole, self.bottomButtonsLayout
         )
-        self.preprocessResultLabel = QtWidgets.QLabel(parent=PreprocessSettingDialog)
-        self.preprocessResultLabel.setGeometry(QtCore.QRect(530, 50, 381, 381))
-        self.preprocessResultLabel.setScaledContents(True)
-        self.preprocessResultLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.preprocessResultLabel.setObjectName("preprocessResultLabel")
-        self.dataNameLabel = QtWidgets.QLabel(parent=PreprocessSettingDialog)
-        self.dataNameLabel.setGeometry(QtCore.QRect(530, 10, 201, 31))
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.dataNameLabel.setFont(font)
-        self.dataNameLabel.setObjectName("dataNameLabel")
-        self.layoutWidget_4 = QtWidgets.QWidget(parent=PreprocessSettingDialog)
-        self.layoutWidget_4.setGeometry(QtCore.QRect(640, 440, 151, 32))
-        self.layoutWidget_4.setObjectName("layoutWidget_4")
-        self.PreprocessSettingSwitchDataButtons = QtWidgets.QHBoxLayout(
-            self.layoutWidget_4
-        )
-        self.PreprocessSettingSwitchDataButtons.setContentsMargins(0, 0, 0, 0)
-        self.PreprocessSettingSwitchDataButtons.setSpacing(0)
-        self.PreprocessSettingSwitchDataButtons.setObjectName(
-            "PreprocessSettingSwitchDataButtons"
-        )
-        self.PreprocessSettingPreviousDataButton = QtWidgets.QToolButton(
-            parent=self.layoutWidget_4
-        )
-        self.PreprocessSettingPreviousDataButton.setMinimumSize(QtCore.QSize(30, 30))
-        self.PreprocessSettingPreviousDataButton.setMaximumSize(
-            QtCore.QSize(30, 16777215)
-        )
-        self.PreprocessSettingPreviousDataButton.setText("")
-        self.PreprocessSettingPreviousDataButton.setArrowType(
-            QtCore.Qt.ArrowType.LeftArrow
-        )
-        self.PreprocessSettingPreviousDataButton.setObjectName(
-            "PreprocessSettingPreviousDataButton"
-        )
-        self.PreprocessSettingSwitchDataButtons.addWidget(
-            self.PreprocessSettingPreviousDataButton
-        )
-        self.staticLabel7 = QtWidgets.QLabel(parent=self.layoutWidget_4)
-        self.staticLabel7.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.staticLabel7.setObjectName("staticLabel7")
-        self.PreprocessSettingSwitchDataButtons.addWidget(self.staticLabel7)
-        self.PreprocessSettingNextDataButton = QtWidgets.QToolButton(
-            parent=self.layoutWidget_4
-        )
-        self.PreprocessSettingNextDataButton.setMinimumSize(QtCore.QSize(30, 30))
-        self.PreprocessSettingNextDataButton.setMaximumSize(QtCore.QSize(30, 16777215))
-        self.PreprocessSettingNextDataButton.setText("")
-        self.PreprocessSettingNextDataButton.setArrowType(
-            QtCore.Qt.ArrowType.RightArrow
-        )
-        self.PreprocessSettingNextDataButton.setObjectName(
-            "PreprocessSettingNextDataButton"
-        )
-        self.PreprocessSettingSwitchDataButtons.addWidget(
-            self.PreprocessSettingNextDataButton
-        )
 
         self.retranslateUi(PreprocessSettingDialog)
         self.saveButton.clicked.connect(PreprocessSettingDialog.saveOptions)  # type: ignore
         self.cancelButton.clicked.connect(PreprocessSettingDialog.close)  # type: ignore
-        self.PreprocessSettingPreviousDataButton.clicked.connect(PreprocessSettingDialog.previousDataButtonClicked)  # type: ignore
-        self.PreprocessSettingNextDataButton.clicked.connect(PreprocessSettingDialog.nextDataButtonClicked)  # type: ignore
+        self.preprocessSwitchTable.clicked["QModelIndex"].connect(PreprocessSettingDialog.updateEnableStates)  # type: ignore
         QtCore.QMetaObject.connectSlotsByName(PreprocessSettingDialog)
         PreprocessSettingDialog.setTabOrder(
             self.preprocessSwitchTable, self.filterOptionsTable
@@ -516,13 +446,6 @@ class PreprocessSettingDialog(object):
             self.downsamplerOptionsTable, self.saveButton
         )
         PreprocessSettingDialog.setTabOrder(self.saveButton, self.cancelButton)
-        PreprocessSettingDialog.setTabOrder(
-            self.cancelButton, self.PreprocessSettingPreviousDataButton
-        )
-        PreprocessSettingDialog.setTabOrder(
-            self.PreprocessSettingPreviousDataButton,
-            self.PreprocessSettingNextDataButton,
-        )
 
     def retranslateUi(self, PreprocessSettingDialog):
         _translate = QtCore.QCoreApplication.translate
@@ -591,9 +514,9 @@ class PreprocessSettingDialog(object):
         item = self.interpolaterOptionsTable.verticalHeaderItem(0)
         item.setText(_translate("PreprocessSettingDialog", "插值公式"))
         item = self.interpolaterOptionsTable.verticalHeaderItem(1)
-        item.setText(_translate("PreprocessSettingDialog", "x起点"))
+        item.setText(_translate("PreprocessSettingDialog", "f起点"))
         item = self.interpolaterOptionsTable.verticalHeaderItem(2)
-        item.setText(_translate("PreprocessSettingDialog", "x终点"))
+        item.setText(_translate("PreprocessSettingDialog", "f终点"))
         item = self.interpolaterOptionsTable.verticalHeaderItem(3)
         item.setText(_translate("PreprocessSettingDialog", "点个数"))
         item = self.interpolaterOptionsTable.horizontalHeaderItem(0)
@@ -611,7 +534,7 @@ class PreprocessSettingDialog(object):
         item = self.smootherOptionsTable.verticalHeaderItem(0)
         item.setText(_translate("PreprocessSettingDialog", "内核(滑动窗口)大小"))
         item = self.smootherOptionsTable.verticalHeaderItem(1)
-        item.setText(_translate("PreprocessSettingDialog", "多项式阶数(小于内核)"))
+        item.setText(_translate("PreprocessSettingDialog", "多项式阶数"))
         item = self.smootherOptionsTable.horizontalHeaderItem(0)
         item.setText(_translate("PreprocessSettingDialog", "值"))
         __sortingEnabled = self.smootherOptionsTable.isSortingEnabled()
@@ -635,26 +558,10 @@ class PreprocessSettingDialog(object):
         self.downsamplerOptionsTable.setSortingEnabled(__sortingEnabled)
         self.saveButton.setText(_translate("PreprocessSettingDialog", "保存配置"))
         self.cancelButton.setText(_translate("PreprocessSettingDialog", "返回"))
-        self.preprocessResultLabel.setText(
-            _translate("PreprocessSettingDialog", "Preprocess Result Here")
-        )
-        self.dataNameLabel.setText(
-            _translate("PreprocessSettingDialog", "Data Name Here:")
-        )
-        self.staticLabel7.setText(_translate("PreprocessSettingDialog", "切换数据"))
 
     def setupComponents(self):
-        self.tabels = [
-            self.preprocessSwitchTable,
-            self.filterOptionsTable,
-            self.cutofferOptionsTable,
-            self.interpolaterOptionsTable,
-            self.smootherOptionsTable,
-            self.downsamplerOptionsTable,
-        ]
-
-        self.initializeTables()
-        self.updateUIs()
+        self.initalizeTables()
+        self.updateEnableStates()
 
     def emitPreprocessorInfo(self):
         # print("Info emitted!")
@@ -718,13 +625,7 @@ class PreprocessSettingDialog(object):
         with open(configFilePath, "w") as configfile:
             config.write(configfile)
 
-    def emitProcessedDatas(self):
-        print("Datas emitted!")
-        self.processedDatasSignal.emit(self.processedDatas)
-
-    def initializeTables(self):
-        self.initializing = True
-
+    def initalizeTables(self):
         self.readPreprocessorInfo()
 
         # Preprocess Switch
@@ -734,6 +635,7 @@ class PreprocessSettingDialog(object):
             checkbox = QtWidgets.QCheckBox()
             self.preprocessSwitchTable.setCellWidget(0, col, checkbox)
             checkbox.setChecked(isEnable[col])
+            checkbox.clicked.connect(self.updateEnableStates)
 
         # Filter
         empty = len(self.filterOptions) == 0
@@ -783,25 +685,8 @@ class PreprocessSettingDialog(object):
             valItem = QtWidgets.QTableWidgetItem(str(val))
             self.downsamplerOptionsTable.setItem(row, 0, valItem)
 
-        self.setupTabelSignals()
-
         if self.invaildRead:
             self.saveOptions()
-
-        self.initializing = False
-
-    def setupTabelSignals(self):
-        for tabel in self.tabels:
-            # Its Widgets' Signal
-            for row in range(tabel.rowCount()):
-                for col in range(tabel.columnCount()):
-                    cellWidget = tabel.cellWidget(row, col)
-                    if isinstance(cellWidget, QtWidgets.QCheckBox):
-                        cellWidget.stateChanged.connect(self.updateUIs)
-                    if isinstance(cellWidget, QtWidgets.QComboBox):
-                        cellWidget.currentIndexChanged.connect(self.updateUIs)
-
-            tabel.itemChanged.connect(self.updateUIs)
 
     def readPreprocessSwitch(self):
         preprocessorSwitch = []
@@ -875,7 +760,7 @@ class PreprocessSettingDialog(object):
             self.downSamplerOptions,
         ]
 
-    def updatePreprocessorInfo(self):
+    def readUIOptions(self):
         # Preprocess Switch
         self.readPreprocessSwitch()
 
@@ -950,83 +835,25 @@ class PreprocessSettingDialog(object):
         ]
 
     def saveOptions(self):
-        self.updatePreprocessorInfo()
+        self.readUIOptions()
         self.writePreprocessorInfo()
         self.emitPreprocessorInfo()
-
-        lenProcessed = len(self.processedDatas)
-        if lenProcessed != 0 and lenProcessed == len(self.ogdatas):
-            self.emitProcessedDatas()
-
         self.close()
 
     def updateEnableStates(self):
         self.readPreprocessSwitch()
 
         switches = self.preprocessorSwitch
-        tables = self.tabels[1:]
+        tables = [
+            self.filterOptionsTable,
+            self.cutofferOptionsTable,
+            self.interpolaterOptionsTable,
+            self.smootherOptionsTable,
+            self.downsamplerOptionsTable,
+        ]
 
         for i, isEnable in enumerate(switches):
             tables[i].setDisabled(not isEnable)
-
-    def updateProcessedDatas(self):
-        self.processedDatas = DataProcessor.PreProcessDatas(
-            self.ogdatas, self.preprocessorInfo
-        )
-
-    def updateUIs(self):
-        if self.initializing:
-            return
-
-        self.updateEnableStates()
-        self.updatePreprocessorInfo()
-        self.updateDiagram()
-
-        # Button Logic
-        if self.dataIndex is None:
-            self.PreprocessSettingPreviousDataButton.setEnabled(False)
-            self.PreprocessSettingNextDataButton.setEnabled(False)
-        else:
-            self.PreprocessSettingPreviousDataButton.setEnabled(self.dataIndex > 0)
-            self.PreprocessSettingNextDataButton.setEnabled(
-                self.dataIndex < len(self.ogdatas) - 1
-            )
-
-    def updateDiagram(self):
-        if self.dataIndex is None:
-            self.dataNameLabel.setText("未选择任何数据！")
-            self.preprocessResultLabel.setPixmap(
-                QtGui.QPixmap(self.diagramTemplatePath)
-            )
-            return
-
-        self.updateProcessedDatas()
-
-        data = self.processedDatas[self.dataIndex]
-        dataName = self.dataNames[self.dataIndex]
-        try:
-            picPath = DrawDiagram.DrawNyquistDigram(
-                dataImpedances=[data["impedance"]],
-                title=dataName,
-                temp=True,
-            )
-            self.dataNameLabel.setText(dataName + ":")
-            self.preprocessResultLabel.setPixmap(QtGui.QPixmap(picPath))
-        except Exception as e:
-            self.dataNameLabel.setText(e)
-            self.preprocessResultLabel.setPixmap(
-                QtGui.QPixmap(self.diagramTemplatePath)
-            )
-
-    def previousDataButtonClicked(self):
-        if self.dataIndex > 0:
-            self.dataIndex -= 1
-            self.updateUIs()
-
-    def nextDataButtonClicked(self):
-        if self.dataIndex < len(self.ogdatas) - 1:
-            self.dataIndex += 1
-            self.updateUIs()
 
 
 class PreprocessSettingDialog(QtWidgets.QDialog, PreprocessSettingDialog):

@@ -1,4 +1,6 @@
 import numpy as np
+import schemdraw
+import schemdraw.elements as elm
 
 """
 class ComponentExample(ComponentBase):
@@ -8,8 +10,8 @@ class ComponentExample(ComponentBase):
 
     def __init__(self):
         super().__init__()
-        varmap = {"VarA": 2, "VarB": 1}
-        displayName = "The Name Shown In the Result Page"
+        self.varmap = {"VarA": 2, "VarB": 1}
+        self.displayName = "The Name Shown In the Result Page"
     
     def Impedance(self, w: np.ndarray)->np.ndarray:
         # your implementation here
@@ -47,6 +49,13 @@ class ComponentExample(ComponentBase):
         # VarC = VarA * VarB / 10
         # content["VarC_DisplayName"] = VarC
         # return content
+    
+    # Optional
+    def GetDiagram() -> schemdraw.Drawing:
+        with schemdraw.Drawing(show=False) as diagram:
+            # your diagram here
+
+        return diagram
 """
 
 
@@ -76,6 +85,18 @@ class ComponentBase:
                     index += 1
 
 
+class Filling:
+    def __init__(self):
+        self.varmap = "Ignore"
+        self.displayName = "..."
+
+    def GetDiagram() -> schemdraw.Drawing:
+        with schemdraw.Drawing(show=False) as diagram:
+            diagram += elm.DotDotDot().right()
+
+        return diagram
+
+
 class StartResistance(ComponentBase):
     RCircuit = 0
 
@@ -102,19 +123,25 @@ class StartResistance(ComponentBase):
 
         return boundTypeDict
 
+    def GetDiagram() -> schemdraw.Drawing:
+        with schemdraw.Drawing(show=False) as diagram:
+            diagram += elm.Resistor().label("Rc").right()
+
+        return diagram
+
 
 class StartInductor(ComponentBase):
     Rs = 0
-    L = 0
+    L_Start = 0
 
     def __init__(self):
         super().__init__()
-        self.varmap = {"Rs": 1, "L": 1}
+        self.varmap = {"Rs": 1, "L_Start": 1}
         self.displayName = "启动电感"
 
     def Impedance(self, w: np.ndarray) -> np.ndarray:
         Rs = self.Rs
-        L = w * self.L * 1j
+        L = w * self.L_Start * 1j
         impedances = 1 / (1 / Rs + 1 / L)
 
         return np.conj(impedances)
@@ -132,7 +159,7 @@ class StartInductor(ComponentBase):
         realWidth = dataInfo["Real Width"]
 
         RsBound = (0.01 * realMin, 100 * realMin)
-        LBound = (1e-50, 100 * realWidth)
+        LBound = (1e-50, 1e-5)
         bounds = [RsBound, LBound]
 
         boundTypeDict = {}
@@ -140,6 +167,21 @@ class StartInductor(ComponentBase):
             boundTypeDict[key] = bound
 
         return boundTypeDict
+
+    def GetDiagram() -> schemdraw.Drawing:
+        with schemdraw.Drawing(show=False) as diagram:
+            diagram += elm.Line().length(1.5).right()
+            diagram += elm.Line().length(1.5).up()
+            diagram += elm.Resistor().label("Rs").right()
+            diagram += elm.Line().length(1.5).down()
+            diagram.push()
+            diagram += elm.Line().length(1.5).down()
+            diagram += elm.Inductor2().label("L").left()
+            diagram += elm.Line().length(1.5).up()
+            diagram.pop()
+            diagram += elm.Line().length(1.5).right()
+
+        return diagram
 
 
 class RingImpedance(ComponentBase):
@@ -157,10 +199,8 @@ class RingImpedance(ComponentBase):
         C = self.C
         beta = self.beta
 
-        tau = ((R * C * w ** (1 - beta)) / np.cos((np.pi / 2) * (1 - beta))) ** (
-            1 / beta
-        )
-        impedances = R / (1 + (w * tau * 1j) ** beta)
+        tau = (R * C * w ** (1 - beta)) / np.cos((np.pi / 2) * (1 - beta))
+        impedances = R / (1 + (w * 1j) ** beta * tau)
         return np.conj(impedances)
 
     def Derivative(self, w: np.ndarray) -> np.ndarray:
@@ -205,6 +245,21 @@ class RingImpedance(ComponentBase):
 
         return derivedQuantities
 
+    def GetDiagram() -> schemdraw.Drawing:
+        with schemdraw.Drawing(show=False) as diagram:
+            diagram += elm.Line().length(1.5).right()
+            diagram += elm.Line().length(1.5).up()
+            diagram += elm.Resistor().label(f"R").right()
+            diagram += elm.Line().length(1.5).down()
+            diagram.push()
+            diagram += elm.Line().length(1.5).down()
+            diagram += elm.Capacitor().label(f"C").left()
+            diagram += elm.Line().length(1.5).up()
+            diagram.pop()
+            diagram += elm.Line().length(1.5).right()
+
+        return diagram
+
 
 class NonIdealCapacitor_Series(ComponentBase):
     R_NICS = 0
@@ -238,6 +293,13 @@ class NonIdealCapacitor_Series(ComponentBase):
             boundTypeDict[key] = bound
 
         return boundTypeDict
+
+    def GetDiagram() -> schemdraw.Drawing:
+        with schemdraw.Drawing(show=False) as diagram:
+            diagram += elm.Resistor().label(f"R").right()
+            diagram += elm.Capacitor().label(f"CPE").right()
+
+        return diagram
 
 
 class NonIdealCapacitor_Parallel(ComponentBase):
@@ -273,6 +335,21 @@ class NonIdealCapacitor_Parallel(ComponentBase):
 
         return boundTypeDict
 
+    def GetDiagram() -> schemdraw.Drawing:
+        with schemdraw.Drawing(show=False) as diagram:
+            diagram += elm.Line().length(1.5).right()
+            diagram += elm.Line().length(1.5).up()
+            diagram += elm.Resistor().label(f"R").right()
+            diagram += elm.Line().length(1.5).down()
+            diagram.push()
+            diagram += elm.Line().length(1.5).down()
+            diagram += elm.Capacitor().label(f"CPE").left()
+            diagram += elm.Line().length(1.5).up()
+            diagram.pop()
+            diagram += elm.Line().length(1.5).right()
+
+        return diagram
+
 
 class NonIdealStartInductor(ComponentBase):
     R_NISI = 0
@@ -306,3 +383,75 @@ class NonIdealStartInductor(ComponentBase):
             boundTypeDict[key] = bound
 
         return boundTypeDict
+
+    def GetDiagram() -> schemdraw.Drawing:
+        with schemdraw.Drawing(show=False) as diagram:
+            diagram += elm.Line().length(1.5).right()
+            diagram += elm.Line().length(1.5).up()
+            diagram += elm.Resistor().label(f"R").right()
+            diagram += elm.Line().length(1.5).down()
+            diagram.push()
+            diagram += elm.Line().length(1.5).down()
+            diagram += elm.Inductor2().label(f"LCPE").left()
+            diagram += elm.Line().length(1.5).up()
+            diagram.pop()
+            diagram += elm.Line().length(1.5).right()
+
+        return diagram
+
+
+class ChargeTransferComponent(ComponentBase):
+    R = 0
+    L = 0
+    C = 0
+    beta = 0
+
+    def __init__(self):
+        super().__init__()
+        self.varmap = {"R": 1, "L": 1, "C": 1, "beta": 1}
+        self.displayName = "电荷转移模块"
+
+    def Impedance(self, w: np.ndarray) -> np.ndarray:
+        R = self.R
+        L = self.L
+        C = self.C
+        beta = self.beta
+
+        L = w * L * 1j
+
+        tau = ((R + L) * C * w ** (1 - beta)) / np.cos((np.pi / 2) * (1 - beta))
+        impedances = (R + L) / (1 + (w * 1j) ** beta * tau)
+        return np.conj(impedances)
+
+    def GetBoundType(self, dataInfo: dict) -> dict:
+        realWidth = dataInfo["Real Width"]
+
+        RBound = (1e-50, 1.5 * realWidth)
+        LBound = (0, 1e-6)
+        CBound = (1e-50, 1.5 * realWidth)
+        betaBound = (0.1, 0.99)
+        bounds = [RBound, LBound, CBound, betaBound]
+
+        boundTypeDict = {}
+        for key, bound in zip(self.varmap.keys(), bounds):
+            boundTypeDict[key] = bound
+
+        return boundTypeDict
+
+    def GetDiagram() -> schemdraw.Drawing:
+        with schemdraw.Drawing(show=False) as diagram:
+            diagram += elm.Line().length(1.5).right()
+            diagram += elm.Line().length(1.5).up()
+            diagram += elm.Resistor().label(f"R").right()
+            diagram += elm.Inductor2().label(f"L").right()
+            diagram += elm.Line().length(1.5).down()
+            diagram.push()
+            diagram += elm.Line().length(1.5).down()
+            diagram += elm.Line().length(1.5).left()
+            diagram += elm.Capacitor().label(f"C").left()
+            diagram += elm.Line().length(1.5).left()
+            diagram += elm.Line().length(1.5).up()
+            diagram.pop()
+            diagram += elm.Line().length(1.5).right()
+
+        return diagram

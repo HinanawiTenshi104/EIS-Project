@@ -1,13 +1,34 @@
+import importlib.util
 import types
 
 import numpy as np
 
-from Modules import Components
+# Load Components.py
+print("---Loading Components---")
+Components_py_Path = "Modules/Components.py"
+
+spec = importlib.util.spec_from_file_location("Components", Components_py_Path)
+ComponentModule = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(ComponentModule)
+
+# Filling Components Dict
+circuitPrototypeComponents = {}
+allAttributes = dir(ComponentModule)
+componentNames = [attr for attr in allAttributes if not attr.startswith("__")]
+componentNames.remove("ComponentBase")
+
+for componentName in componentNames:
+    ref = getattr(ComponentModule, componentName)
+    if isinstance(ref, type):
+        circuitPrototypeComponents[componentName] = ref()
+    else:
+        print(f"Model Settings: The ref of {componentName} is not a type")
 
 
 class Circuit:
     displayName = ""
     componentNames = []
+    structure = []
 
     components = []
     componentDisplayNames = []
@@ -15,17 +36,22 @@ class Circuit:
 
     def __init__(self, circuitInfo: dict = None):
         if circuitInfo == None:
-            circuitInfo = {"Display Name": "New Circuit", "Component Names": []}
+            circuitInfo = {
+                "Display Name": "New Circuit",
+                "Component Names": [],
+                "Structure": [],
+            }
 
         self.displayName = circuitInfo["Display Name"]
         self.componentNames = circuitInfo["Component Names"]
+        self.structure = circuitInfo["Structure"]
 
         self.updateComponentInfos()
 
     def __populateComponents(self):
         self.components = []
         for componentName in self.componentNames:
-            componentRef = getattr(Components, componentName)
+            componentRef = getattr(ComponentModule, componentName)
             if componentRef is not None and isinstance(componentRef, type):
                 self.components.append(componentRef())
             else:
@@ -34,14 +60,18 @@ class Circuit:
     def __populateVarMaps(self):
         self.varmaps = []
         for component in self.components:
-            if component.varmap is not None and isinstance(component.varmap, dict):
+            if hasattr(component, "varmap"):
                 varmap = component.varmap
-            else:
-                raise ValueError(
-                    f"Component {component.__class__.__name__}'s varmap not found or is not a dict"
-                )
+                if isinstance(varmap, dict):
+                    self.varmaps.append(varmap)
+                    continue
 
-            self.varmaps.append(varmap)
+                if isinstance(varmap, str) and varmap == "Ignore":
+                    continue
+
+            raise ValueError(
+                f"Component {component.__class__.__name__}'s varmap not found or is invaild"
+            )
 
     def __populateComponentDisplayNames(self):
         self.componentDisplayNames = []
@@ -108,24 +138,39 @@ class Circuit:
         w = 2 * np.pi * f
 
         impedance = 0 + 0j
-        for component in self.components:
-            if hasattr(component, "Impedance"):
-                impedance += component.Impedance(w)
-            else:
-                raise ValueError(
-                    f"模块{component.__class__.__name__}没有Impedance方法!"
-                )
+        start = 0
+        for cut in self.structure:
+            circuitSection = self.components[start:cut]
+            length = len(circuitSection)
+            if length == 0:
+                raise ValueError(f"电路切片有问题！结构:{self.structure}")
+
+            # Just Series
+            elif length == 1:
+                component = circuitSection[0]
+                if hasattr(component, "Impedance"):
+                    impedance += component.Impedance(w)
+                else:
+                    raise ValueError(
+                        f"模块{component.__class__.__name__}没有Impedance方法!"
+                    )
+
+            # Has Parallel Part
+            elif length > 1:
+                admittance = 0 + 0j
+                for component in circuitSection:
+                    if hasattr(component, "Impedance"):
+                        admittance += 1 / component.Impedance(w)
+                    else:
+                        raise ValueError(
+                            f"模块{component.__class__.__name__}没有Impedance方法!"
+                        )
+
+                impedance += 1 / admittance
+
+            start = cut
 
         return impedance
 
     def ImpedancesDerivativeAnalyse(self, f: np.ndarray) -> np.ndarray:
-        w = 2 * np.pi * f
-
-        derivative = 0
-        for component in self.components:
-            if hasattr(component, "Derivative"):
-                derivative += component.Derivative(w)
-            else:
-                print(f"模块{component.__class__.__name__}没有Derivative方法!")
-
-        return derivative
+        pass

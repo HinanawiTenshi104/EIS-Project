@@ -271,13 +271,13 @@ class MainWindow(QtWidgets.QMainWindow):
         )
         self.ReadDataHighlightFileName.setWordWrap(True)
         self.ReadDataHighlightFileName.setObjectName("ReadDataHighlightFileName")
-        self.widget = QtWidgets.QWidget(parent=self.ReadData)
-        self.widget.setGeometry(QtCore.QRect(290, 470, 491, 51))
-        self.widget.setObjectName("widget")
-        self.ReadDataHLayout = QtWidgets.QHBoxLayout(self.widget)
+        self.layoutWidget1 = QtWidgets.QWidget(parent=self.ReadData)
+        self.layoutWidget1.setGeometry(QtCore.QRect(290, 470, 491, 51))
+        self.layoutWidget1.setObjectName("layoutWidget1")
+        self.ReadDataHLayout = QtWidgets.QHBoxLayout(self.layoutWidget1)
         self.ReadDataHLayout.setContentsMargins(0, 0, 0, 0)
         self.ReadDataHLayout.setObjectName("ReadDataHLayout")
-        self.PreprocessDataCheckBox = QtWidgets.QCheckBox(parent=self.widget)
+        self.PreprocessDataCheckBox = QtWidgets.QCheckBox(parent=self.layoutWidget1)
         self.PreprocessDataCheckBox.setMaximumSize(QtCore.QSize(100, 16777215))
         self.PreprocessDataCheckBox.setLayoutDirection(
             QtCore.Qt.LayoutDirection.RightToLeft
@@ -285,12 +285,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.PreprocessDataCheckBox.setChecked(True)
         self.PreprocessDataCheckBox.setObjectName("PreprocessDataCheckBox")
         self.ReadDataHLayout.addWidget(self.PreprocessDataCheckBox)
-        self.ShowPreprocessOptionsButton = QtWidgets.QPushButton(parent=self.widget)
+        self.ShowPreprocessOptionsButton = QtWidgets.QPushButton(
+            parent=self.layoutWidget1
+        )
         self.ShowPreprocessOptionsButton.setMinimumSize(QtCore.QSize(0, 40))
         self.ShowPreprocessOptionsButton.setMaximumSize(QtCore.QSize(100, 16777215))
         self.ShowPreprocessOptionsButton.setObjectName("ShowPreprocessOptionsButton")
         self.ReadDataHLayout.addWidget(self.ShowPreprocessOptionsButton)
-        self.ReadDataProcessingDRTLabel = QtWidgets.QLabel(parent=self.widget)
+        self.ReadDataProcessingDRTLabel = QtWidgets.QLabel(parent=self.layoutWidget1)
         font = QtGui.QFont()
         font.setFamily("黑体")
         font.setPointSize(14)
@@ -516,13 +518,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ProcessingNextButton.setEnabled(False)
         self.ProcessingNextButton.setGeometry(QtCore.QRect(660, 460, 121, 51))
         self.ProcessingNextButton.setObjectName("ProcessingNextButton")
-        self.layoutWidget1 = QtWidgets.QWidget(parent=self.Processing)
-        self.layoutWidget1.setGeometry(QtCore.QRect(20, 520, 761, 71))
-        self.layoutWidget1.setObjectName("layoutWidget1")
-        self.ProcessingProgressBars = QtWidgets.QFormLayout(self.layoutWidget1)
+        self.layoutWidget2 = QtWidgets.QWidget(parent=self.Processing)
+        self.layoutWidget2.setGeometry(QtCore.QRect(20, 520, 761, 71))
+        self.layoutWidget2.setObjectName("layoutWidget2")
+        self.ProcessingProgressBars = QtWidgets.QFormLayout(self.layoutWidget2)
         self.ProcessingProgressBars.setContentsMargins(0, 0, 0, 0)
         self.ProcessingProgressBars.setObjectName("ProcessingProgressBars")
-        self.staticLabel4 = QtWidgets.QLabel(parent=self.layoutWidget1)
+        self.staticLabel4 = QtWidgets.QLabel(parent=self.layoutWidget2)
         font = QtGui.QFont()
         font.setFamily("黑体")
         font.setPointSize(12)
@@ -532,7 +534,7 @@ class MainWindow(QtWidgets.QMainWindow):
             0, QtWidgets.QFormLayout.ItemRole.LabelRole, self.staticLabel4
         )
         self.CurrentMethodProgressBar = QtWidgets.QProgressBar(
-            parent=self.layoutWidget1
+            parent=self.layoutWidget2
         )
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Expanding,
@@ -549,7 +551,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ProcessingProgressBars.setWidget(
             0, QtWidgets.QFormLayout.ItemRole.FieldRole, self.CurrentMethodProgressBar
         )
-        self.staticLabel5 = QtWidgets.QLabel(parent=self.layoutWidget1)
+        self.staticLabel5 = QtWidgets.QLabel(parent=self.layoutWidget2)
         font = QtGui.QFont()
         font.setFamily("黑体")
         font.setPointSize(12)
@@ -558,7 +560,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ProcessingProgressBars.setWidget(
             1, QtWidgets.QFormLayout.ItemRole.LabelRole, self.staticLabel5
         )
-        self.TotalProgressBar = QtWidgets.QProgressBar(parent=self.layoutWidget1)
+        self.TotalProgressBar = QtWidgets.QProgressBar(parent=self.layoutWidget2)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Expanding,
             QtWidgets.QSizePolicy.Policy.Expanding,
@@ -579,14 +581,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ProcessingVideoFrame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.ProcessingVideoFrame.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.ProcessingVideoFrame.setObjectName("ProcessingVideoFrame")
-        self.layoutWidget2 = QtWidgets.QWidget(parent=self.Processing)
-        self.layoutWidget2.setGeometry(QtCore.QRect(300, 420, 191, 61))
-        self.layoutWidget2.setObjectName("layoutWidget2")
-        self.ProcessingVideoButtons = QtWidgets.QHBoxLayout(self.layoutWidget2)
+        self.layoutWidget3 = QtWidgets.QWidget(parent=self.Processing)
+        self.layoutWidget3.setGeometry(QtCore.QRect(300, 420, 191, 61))
+        self.layoutWidget3.setObjectName("layoutWidget3")
+        self.ProcessingVideoButtons = QtWidgets.QHBoxLayout(self.layoutWidget3)
         self.ProcessingVideoButtons.setContentsMargins(0, 0, 0, 0)
         self.ProcessingVideoButtons.setObjectName("ProcessingVideoButtons")
         self.ProcessingPreviousVideoButton = QtWidgets.QPushButton(
-            parent=self.layoutWidget2
+            parent=self.layoutWidget3
         )
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Maximum, QtWidgets.QSizePolicy.Policy.Maximum
@@ -604,7 +606,7 @@ class MainWindow(QtWidgets.QMainWindow):
             "ProcessingPreviousVideoButton"
         )
         self.ProcessingVideoButtons.addWidget(self.ProcessingPreviousVideoButton)
-        self.ProcessingPlayButton = QtWidgets.QPushButton(parent=self.layoutWidget2)
+        self.ProcessingPlayButton = QtWidgets.QPushButton(parent=self.layoutWidget3)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Maximum, QtWidgets.QSizePolicy.Policy.Maximum
         )
@@ -620,7 +622,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ProcessingPlayButton.setObjectName("ProcessingPlayButton")
         self.ProcessingVideoButtons.addWidget(self.ProcessingPlayButton)
         self.ProcessingNextVideoButton = QtWidgets.QPushButton(
-            parent=self.layoutWidget2
+            parent=self.layoutWidget3
         )
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Maximum, QtWidgets.QSizePolicy.Policy.Maximum
@@ -636,7 +638,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ProcessingNextVideoButton.setIconSize(QtCore.QSize(20, 20))
         self.ProcessingNextVideoButton.setObjectName("ProcessingNextVideoButton")
         self.ProcessingVideoButtons.addWidget(self.ProcessingNextVideoButton)
-        self.ProcessingVolumeButton = QtWidgets.QPushButton(parent=self.layoutWidget2)
+        self.ProcessingVolumeButton = QtWidgets.QPushButton(parent=self.layoutWidget3)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Maximum, QtWidgets.QSizePolicy.Policy.Maximum
         )
@@ -651,27 +653,27 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ProcessingVolumeButton.setIconSize(QtCore.QSize(20, 20))
         self.ProcessingVolumeButton.setObjectName("ProcessingVolumeButton")
         self.ProcessingVideoButtons.addWidget(self.ProcessingVolumeButton)
-        self.layoutWidget3 = QtWidgets.QWidget(parent=self.Processing)
-        self.layoutWidget3.setGeometry(QtCore.QRect(20, 428, 271, 91))
-        self.layoutWidget3.setObjectName("layoutWidget3")
-        self.ProcessingInfoLabels = QtWidgets.QVBoxLayout(self.layoutWidget3)
+        self.layoutWidget4 = QtWidgets.QWidget(parent=self.Processing)
+        self.layoutWidget4.setGeometry(QtCore.QRect(20, 428, 271, 91))
+        self.layoutWidget4.setObjectName("layoutWidget4")
+        self.ProcessingInfoLabels = QtWidgets.QVBoxLayout(self.layoutWidget4)
         self.ProcessingInfoLabels.setContentsMargins(0, 0, 0, 0)
         self.ProcessingInfoLabels.setObjectName("ProcessingInfoLabels")
-        self.ProcessingTimeUsageLabel = QtWidgets.QLabel(parent=self.layoutWidget3)
+        self.ProcessingTimeUsageLabel = QtWidgets.QLabel(parent=self.layoutWidget4)
         font = QtGui.QFont()
         font.setFamily("黑体")
         font.setPointSize(12)
         self.ProcessingTimeUsageLabel.setFont(font)
         self.ProcessingTimeUsageLabel.setObjectName("ProcessingTimeUsageLabel")
         self.ProcessingInfoLabels.addWidget(self.ProcessingTimeUsageLabel)
-        self.ProcessingCurrentMethodLabel = QtWidgets.QLabel(parent=self.layoutWidget3)
+        self.ProcessingCurrentMethodLabel = QtWidgets.QLabel(parent=self.layoutWidget4)
         font = QtGui.QFont()
         font.setFamily("黑体")
         font.setPointSize(12)
         self.ProcessingCurrentMethodLabel.setFont(font)
         self.ProcessingCurrentMethodLabel.setObjectName("ProcessingCurrentMethodLabel")
         self.ProcessingInfoLabels.addWidget(self.ProcessingCurrentMethodLabel)
-        self.ProcessingCurrentDataLabel = QtWidgets.QLabel(parent=self.layoutWidget3)
+        self.ProcessingCurrentDataLabel = QtWidgets.QLabel(parent=self.layoutWidget4)
         font = QtGui.QFont()
         font.setFamily("黑体")
         font.setPointSize(12)
@@ -734,14 +736,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ResultDiagram.setScaledContents(True)
         self.ResultDiagram.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.ResultDiagram.setObjectName("ResultDiagram")
-        self.layoutWidget4 = QtWidgets.QWidget(parent=self.Results)
-        self.layoutWidget4.setGeometry(QtCore.QRect(370, 400, 421, 90))
-        self.layoutWidget4.setObjectName("layoutWidget4")
-        self.ResultDiagramControl = QtWidgets.QVBoxLayout(self.layoutWidget4)
+        self.layoutWidget5 = QtWidgets.QWidget(parent=self.Results)
+        self.layoutWidget5.setGeometry(QtCore.QRect(370, 400, 421, 90))
+        self.layoutWidget5.setObjectName("layoutWidget5")
+        self.ResultDiagramControl = QtWidgets.QVBoxLayout(self.layoutWidget5)
         self.ResultDiagramControl.setContentsMargins(0, 0, 0, 0)
         self.ResultDiagramControl.setSpacing(0)
         self.ResultDiagramControl.setObjectName("ResultDiagramControl")
-        self.ResultDiagramMethodLabel = QtWidgets.QLabel(parent=self.layoutWidget4)
+        self.ResultDiagramMethodLabel = QtWidgets.QLabel(parent=self.layoutWidget5)
         font = QtGui.QFont()
         font.setFamily("黑体")
         font.setPointSize(12)
@@ -752,7 +754,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ResultDiagramULayout = QtWidgets.QHBoxLayout()
         self.ResultDiagramULayout.setSpacing(0)
         self.ResultDiagramULayout.setObjectName("ResultDiagramULayout")
-        self.ResultDiagramUpButton = QtWidgets.QToolButton(parent=self.layoutWidget4)
+        self.ResultDiagramUpButton = QtWidgets.QToolButton(parent=self.layoutWidget5)
         self.ResultDiagramUpButton.setMaximumSize(QtCore.QSize(25, 25))
         font = QtGui.QFont()
         font.setFamily("3ds")
@@ -766,7 +768,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ResultDiagramMLayout = QtWidgets.QHBoxLayout()
         self.ResultDiagramMLayout.setSpacing(5)
         self.ResultDiagramMLayout.setObjectName("ResultDiagramMLayout")
-        self.ResultDiagramLeftButton = QtWidgets.QToolButton(parent=self.layoutWidget4)
+        self.ResultDiagramLeftButton = QtWidgets.QToolButton(parent=self.layoutWidget5)
         self.ResultDiagramLeftButton.setMaximumSize(QtCore.QSize(25, 25))
         font = QtGui.QFont()
         font.setFamily("3ds")
@@ -776,14 +778,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ResultDiagramLeftButton.setArrowType(QtCore.Qt.ArrowType.LeftArrow)
         self.ResultDiagramLeftButton.setObjectName("ResultDiagramLeftButton")
         self.ResultDiagramMLayout.addWidget(self.ResultDiagramLeftButton)
-        self.ResultDiagramTitle = QtWidgets.QLabel(parent=self.layoutWidget4)
+        self.ResultDiagramTitle = QtWidgets.QLabel(parent=self.layoutWidget5)
         self.ResultDiagramTitle.setFrameShape(QtWidgets.QFrame.Shape.WinPanel)
         self.ResultDiagramTitle.setFrameShadow(QtWidgets.QFrame.Shadow.Plain)
         self.ResultDiagramTitle.setScaledContents(True)
         self.ResultDiagramTitle.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.ResultDiagramTitle.setObjectName("ResultDiagramTitle")
         self.ResultDiagramMLayout.addWidget(self.ResultDiagramTitle)
-        self.ResultDiagramRightButton = QtWidgets.QToolButton(parent=self.layoutWidget4)
+        self.ResultDiagramRightButton = QtWidgets.QToolButton(parent=self.layoutWidget5)
         self.ResultDiagramRightButton.setMaximumSize(QtCore.QSize(25, 25))
         font = QtGui.QFont()
         font.setFamily("3ds")
@@ -797,7 +799,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ResultDiagramDLayout = QtWidgets.QHBoxLayout()
         self.ResultDiagramDLayout.setSpacing(0)
         self.ResultDiagramDLayout.setObjectName("ResultDiagramDLayout")
-        self.ResultDiagramDownButton = QtWidgets.QToolButton(parent=self.layoutWidget4)
+        self.ResultDiagramDownButton = QtWidgets.QToolButton(parent=self.layoutWidget5)
         self.ResultDiagramDownButton.setMaximumSize(QtCore.QSize(25, 25))
         font = QtGui.QFont()
         font.setFamily("3ds")
@@ -913,7 +915,7 @@ class MainWindow(QtWidgets.QMainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "EIS程序嘻嘻"))
         self.TitlePic.setText(_translate("MainWindow", "Title Here"))
         self.CornerPic.setText(_translate("MainWindow", "Corner Gif Here"))
-        self.VersionText.setText(_translate("MainWindow", "Version 1.0.0"))
+        self.VersionText.setText(_translate("MainWindow", "Version 2.0.0"))
         self.ReadDataButton.setText(_translate("MainWindow", "读取数据"))
         self.ProgramSettingButton.setText(_translate("MainWindow", "程序设置"))
         self.ExitButton.setText(_translate("MainWindow", "退出"))
@@ -1079,8 +1081,15 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.programSettingDialog.settingsSignal.connect(self.receiveSettings)
         self.modelSettingDialog.circuitsSignal.connect(self.receiveCircuits)
+
+        self.preprocessSettingDialog.diagramTemplatePath = (
+            UIReadDatasResourceDir + "PreprocessTemplate.jpg"
+        )
         self.preprocessSettingDialog.preprocessorInfoSignal.connect(
             self.receivePreprocessInfo
+        )
+        self.preprocessSettingDialog.processedDatasSignal.connect(
+            self.receiveProcessedDatas
         )
 
         self.processDataThread.progressBarUpdateSignal.connect(self.updateProgressBars)
@@ -1116,6 +1125,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     # Main Menu
     def initializeMainMenu(self):
+        print("\n---Initializing Sub Widgets---")
         self.setupSubWidgets()
 
         print("\n---Switching To Main Menu Page---")
@@ -1299,7 +1309,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ReadDataHighlightFileName.setText(text)
 
         self.hasValidData = True
+        dataNames, datas = zip(*sorted(zip(dataNames, datas)))
+
         self.processDataThread.datas = datas
+        self.processDataThread.ogDatas = list(datas)
         self.processDataThread.dataNames = dataNames
 
         self.DRTInputPaths = DRTInputPaths
@@ -1310,26 +1323,26 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ShowPreprocessOptionsButton.setEnabled(state)
 
     def openPreprocessSettingDialog(self):
-        self.preprocessSettingDialog.show()
+        dialog = self.preprocessSettingDialog
+        dialog.dataIndex = 0 if self.hasValidData else None
+        dialog.ogdatas = self.processDataThread.ogDatas
+        dialog.dataNames = self.processDataThread.dataNames
+        dialog.updateUIs()
+        dialog.show()
 
-    def receivePreprocessInfo(self, infos):
+    def receivePreprocessInfo(self, infos: list):
         # print("Received Preprocess Infos!")
         self.processDataThread.preprocessorInfo = infos
+
+    def receiveProcessedDatas(self, processedDatas: list):
+        print("Received Processed Datas!")
+        self.processDataThread.datas = processedDatas
 
     def readDataBackButtonClicked(self):
         self.returnToMainMenu()
 
     def readDataNextButtonClicked(self):
         if self.hasValidData:
-            datas = self.processDataThread.datas
-            dataNames = self.processDataThread.dataNames
-
-            dataNames, datas = zip(*sorted(zip(dataNames, datas)))
-
-            self.processDataThread.datas = datas
-            self.processDataThread.dataNames = dataNames
-            self.processDataThread.ogDatas = datas
-
             """
             self.ReadDataBackButton.setEnabled(False)
             self.ReadDataNextButton.setEnabled(False)
@@ -1344,9 +1357,17 @@ class MainWindow(QtWidgets.QMainWindow):
             movie.start()
             """
 
+            processedDatas = self.processDataThread.datas
+            dataNames = self.processDataThread.dataNames
+            IO.cleanupDirectory(IO.dirs["Processed Data Dir"])
+            IO.WriteDatas(processedDatas, dataNames)
+
             # ---------------------------------TO DO--------------------------
             # 要是预处理变了DRT就要重跑一遍
+            # 现在是下面这行写死了一定要跑一遍
 
+            self.overwriteDRTData = True
+            IO.cleanupDirectory(IO.dirs["DRT Data Dir"])
             IO.runDRT(self.DRTInputPaths, self.DRTOutputPaths, self.overwriteDRTData)
 
             print("DRT Process Finished!")
@@ -1379,11 +1400,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.modelSettingDialog.circuitIndex = 0
         self.modelSettingDialog.setupComponents()
         self.modelSettingDialog.emitCircuits()
-
-        if len(thread.datas) > 1:
-            self.PreprocessDataCheckBox.setChecked(False)
-            self.PreprocessDataCheckBox.setEnabled(False)
-            self.ShowPreprocessOptionsButton.setEnabled(False)
 
         self.setupMethodsTable()
         self.DRTDiagramPic.setPixmap(

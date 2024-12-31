@@ -55,7 +55,7 @@ residualModes = ("MSE", "MAE", "Log-Cosh", "Huber")
 residualType = residualTypes[0]
 normalizationMode = normalizationModes[0]
 residualStuc = residualStucs[0]
-residualMode = residualModes[0]
+residualMode = residualModes[2]
 
 if residualMode == residualModes[3]:
     delta = 1.0
@@ -103,6 +103,11 @@ def curveFit(
     if applyWeight:
         options = [weightOptions, dzweightOptions, diweightOptions]
         weight, dWeight = DataProcessor.GenerateWeight(data, options)
+
+    bools = f < 1000
+    weight = np.ones_like(f)
+    weight *= bools * 1
+    weight = np.tile(weight, 2)
 
     def residual(parameters: Parameters):
         parametersChanged = DataProcessor.ChangeParameterType(varmaps, parameters)
@@ -169,6 +174,8 @@ def curveFit(
 
         if applyWeight:
             residual = weight * residual
+
+        residual *= weight
 
         return residual
 

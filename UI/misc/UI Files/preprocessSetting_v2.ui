@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PreprocessSettingDialog</class>
+ <widget class="QDialog" name="PreprocessSettingDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>922</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>程序设置</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>511</width>
+     <height>77</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="preprocessSwitchLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QLabel" name="staticLabel1">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>黑体</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>总开关：</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTableWidget" name="preprocessSwitchTable">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <attribute name="horizontalHeaderMinimumSectionSize">
+       <number>31</number>
+      </attribute>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>95</number>
+      </attribute>
+      <attribute name="verticalHeaderDefaultSectionSize">
+       <number>30</number>
+      </attribute>
+      <row>
+       <property name="text">
+        <string>开关</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </row>
+      <column>
+       <property name="text">
+        <string>过滤器</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>截断器</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>插值器</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>平滑器</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>降采样器</string>
+       </property>
+      </column>
+      <item row="0" column="0">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="0" column="1">
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="0" column="2">
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="0" column="3">
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="0" column="4">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>102</y>
+     <width>511</width>
+     <height>361</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="OptionsLayout">
+    <property name="horizontalSpacing">
+     <number>10</number>
+    </property>
+    <property name="verticalSpacing">
+     <number>10</number>
+    </property>
+    <item row="0" column="0">
+     <layout class="QVBoxLayout" name="filterOptionsLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="staticLabel2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>黑体</family>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>过滤器选项：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="filterOptionsTable">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>31</number>
+        </attribute>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>100</number>
+        </attribute>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>30</number>
+        </attribute>
+        <row>
+         <property name="text">
+          <string>内核(滑动窗口)大小</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>标准差阈值</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>导数标准差阈值</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>过滤次数</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>删除虚部小于0的点</string>
+         </property>
+        </row>
+        <column>
+         <property name="text">
+          <string>值</string>
+         </property>
+        </column>
+        <item row="0" column="0">
+         <property name="text">
+          <string>5</string>
+         </property>
+        </item>
+        <item row="1" column="0">
+         <property name="text">
+          <string>1</string>
+         </property>
+        </item>
+        <item row="2" column="0">
+         <property name="text">
+          <string>1</string>
+         </property>
+        </item>
+        <item row="3" column="0">
+         <property name="text">
+          <string>-1</string>
+         </property>
+        </item>
+        <item row="4" column="0">
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="1">
+     <layout class="QVBoxLayout" name="cutofferOptionsLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="staticLabel3">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>黑体</family>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>截断器选项：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="cutofferOptionsTable">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>31</number>
+        </attribute>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>100</number>
+        </attribute>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>30</number>
+        </attribute>
+        <row>
+         <property name="text">
+          <string>截断距离</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>截断左端点</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>截断右端点</string>
+         </property>
+        </row>
+        <column>
+         <property name="text">
+          <string>值</string>
+         </property>
+        </column>
+        <item row="0" column="0">
+         <property name="text">
+          <string>0.2</string>
+         </property>
+        </item>
+        <item row="1" column="0">
+         <property name="text">
+          <string>0.1</string>
+         </property>
+        </item>
+        <item row="2" column="0">
+         <property name="text">
+          <string>0.9</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <layout class="QVBoxLayout" name="interpolaterOptionsLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="staticLabel4">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>黑体</family>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>插值器选项：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="interpolaterOptionsTable">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>31</number>
+        </attribute>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>100</number>
+        </attribute>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>30</number>
+        </attribute>
+        <row>
+         <property name="text">
+          <string>插值公式</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>x起点</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>x终点</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>点个数</string>
+         </property>
+        </row>
+        <column>
+         <property name="text">
+          <string>值</string>
+         </property>
+        </column>
+        <item row="1" column="0">
+         <property name="text">
+          <string>0.6</string>
+         </property>
+        </item>
+        <item row="2" column="0">
+         <property name="text">
+          <string>4.5</string>
+         </property>
+        </item>
+        <item row="3" column="0">
+         <property name="text">
+          <string>100</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="1">
+     <layout class="QVBoxLayout" name="smootherOptionsLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="staticLabel5">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>黑体</family>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>平滑器选项：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="smootherOptionsTable">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>31</number>
+        </attribute>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>100</number>
+        </attribute>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>30</number>
+        </attribute>
+        <row>
+         <property name="text">
+          <string>内核(滑动窗口)大小</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>多项式阶数(小于内核)</string>
+         </property>
+        </row>
+        <column>
+         <property name="text">
+          <string>值</string>
+         </property>
+        </column>
+        <item row="0" column="0">
+         <property name="text">
+          <string>4</string>
+         </property>
+        </item>
+        <item row="1" column="0">
+         <property name="text">
+          <string>3</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="0">
+     <layout class="QVBoxLayout" name="downsamplerOptionsLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="staticLabel6">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>黑体</family>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>降采样器选项：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="downsamplerOptionsTable">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>31</number>
+        </attribute>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>100</number>
+        </attribute>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>30</number>
+        </attribute>
+        <row>
+         <property name="text">
+          <string>融合距离</string>
+         </property>
+        </row>
+        <column>
+         <property name="text">
+          <string>值</string>
+         </property>
+        </column>
+        <item row="0" column="0">
+         <property name="text">
+          <string>0.01</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="1">
+     <layout class="QVBoxLayout" name="bottomButtonsLayout">
+      <item>
+       <widget class="QFrame" name="spacer">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="bottomButtonFrame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QHBoxLayout" name="bottomButtons">
+         <item>
+          <widget class="QPushButton" name="saveButton">
+           <property name="text">
+            <string>保存配置</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="cancelButton">
+           <property name="text">
+            <string>返回</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="preprocessResultLabel">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>50</y>
+     <width>381</width>
+     <height>381</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Preprocess Result Here</string>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="dataNameLabel">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>10</y>
+     <width>201</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Data Name Here:</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget_4">
+   <property name="geometry">
+    <rect>
+     <x>640</x>
+     <y>440</y>
+     <width>151</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="PreprocessSettingSwitchDataButtons">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QToolButton" name="PreprocessSettingPreviousDataButton">
+      <property name="minimumSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>30</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="arrowType">
+       <enum>Qt::LeftArrow</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="staticLabel7">
+      <property name="text">
+       <string>切换数据</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QToolButton" name="PreprocessSettingNextDataButton">
+      <property name="minimumSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>30</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="arrowType">
+       <enum>Qt::RightArrow</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>preprocessSwitchTable</tabstop>
+  <tabstop>filterOptionsTable</tabstop>
+  <tabstop>cutofferOptionsTable</tabstop>
+  <tabstop>interpolaterOptionsTable</tabstop>
+  <tabstop>smootherOptionsTable</tabstop>
+  <tabstop>downsamplerOptionsTable</tabstop>
+  <tabstop>saveButton</tabstop>
+  <tabstop>cancelButton</tabstop>
+  <tabstop>PreprocessSettingPreviousDataButton</tabstop>
+  <tabstop>PreprocessSettingNextDataButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>saveButton</sender>
+   <signal>clicked()</signal>
+   <receiver>PreprocessSettingDialog</receiver>
+   <slot>saveOptions()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>356</x>
+     <y>431</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>303</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cancelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>PreprocessSettingDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>459</x>
+     <y>435</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PreprocessSettingPreviousDataButton</sender>
+   <signal>clicked()</signal>
+   <receiver>PreprocessSettingDialog</receiver>
+   <slot>previousDataButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>662</x>
+     <y>453</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>628</x>
+     <y>484</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PreprocessSettingNextDataButton</sender>
+   <signal>clicked()</signal>
+   <receiver>PreprocessSettingDialog</receiver>
+   <slot>nextDataButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>774</x>
+     <y>459</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>789</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>saveOptions()</slot>
+  <slot>updateUIs()</slot>
+  <slot>previousDataButtonClicked()</slot>
+  <slot>nextDataButtonClicked()</slot>
+ </slots>
+</ui>

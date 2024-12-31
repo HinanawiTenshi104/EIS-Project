@@ -15,10 +15,12 @@ import Optimizer
 drawProcessedDataInCompareDiagram = False
 
 defaultDataDir = "Datas\\ExperimentDatas"
+defaultProcessedDataDir = "Datas\\PreprocessedDatas"
 defaultResultDir = "Datas\\Results"
 defaultDRTDir = "Datas\\DRTDatas"
 defaultDirs = {
     "Data Dir": defaultDataDir,
+    "Processed Data Dir": defaultProcessedDataDir,
     "DRT Data Dir": defaultDRTDir,
     "Result Dir": defaultResultDir,
 }
@@ -107,14 +109,13 @@ def ReadAllDatas(
 def WriteData(
     data: np.ndarray,
     dataTitle: str = "data.txt",
-    savePath: str = "",
-    splitRealAndImag: bool = False,
+    savePath: str = dirs["Processed Data Dir"],
+    splitRealAndImag: bool = True,
 ):
-    dataTitle = os.path.join(savePath, dataTitle)
     if not dataTitle.endswith(".txt"):
         dataTitle += ".txt"
 
-    filePath = os.path.join(dirs["Result Dir"], dataTitle)
+    filePath = os.path.join(savePath, dataTitle)
     directory = os.path.dirname(filePath)
     if not os.path.exists(directory):
         os.makedirs(directory)
@@ -125,10 +126,21 @@ def WriteData(
         else:
             file.write("Frequency\tImpedance\n")
         for f, z in np.nditer([data["frequency"], data["impedance"]]):
+            z = z.conjugate()
             if splitRealAndImag:
                 file.write(f"{f}\t{z.real}\t{z.imag}\n")
             else:
                 file.write(f"{f}\t{z}\n")
+
+
+def WriteDatas(
+    datas: list[np.ndarray],
+    dataNames: list[str],
+    savePath: str = dirs["Processed Data Dir"],
+    splitRealAndImag: bool = True,
+):
+    for data, dataName in zip(datas, dataNames):
+        WriteData(data, dataName, savePath, splitRealAndImag)
 
 
 def WriteResult(

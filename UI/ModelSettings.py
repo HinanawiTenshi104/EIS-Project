@@ -2,9 +2,10 @@ import configparser
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from Modules import Circuit, Components
+from Modules import Circuit
 
 from .ChangeCircuitNameDialog import ChangeCircuitNameDialog
+from .DragWidget import DragItem, DragWidget
 
 configsDir = QtCore.QDir.currentPath() + r"/configs/"
 configFileName = "Model Settings.ini"
@@ -16,6 +17,8 @@ circuitFileName = "Circuits.ini"
 circuitConfigPath = circuitsDir + circuitFileName
 circuitInfoSplitText = ","
 
+componentPicsDir = QtCore.QDir.currentPath() + r"/Modules/ComponentPics/"
+
 
 class ModelSettingsDialog(object):
     #
@@ -23,7 +26,7 @@ class ModelSettingsDialog(object):
 
     availableCircuitComponents = {}
     # [Section Name: circuitPrototype]
-    circuitPrototypes: dict[str, Circuit.Circuit] = {}
+    circuitPrototypeDict: dict[str, Circuit.Circuit] = {}
     # [Display Name : Section Name]
     # Mainly For getCurrentCircuit
     circuitPrototypeSectionNames: dict[str, str] = {}
@@ -32,8 +35,10 @@ class ModelSettingsDialog(object):
     ringCounts: list[int] = []
 
     circuitIndex = 0
-    circuits: list[Circuit.Circuit] = []
+    circuitPrototypes: list[Circuit.Circuit] = []
     circuitsSignal = QtCore.pyqtSignal(list)
+
+    diagramComponentHeight = 250
 
     def setupUi(self, ModelSettings):
         ModelSettings.setObjectName("ModelSettings")
@@ -46,22 +51,29 @@ class ModelSettingsDialog(object):
         self.ModelSettingDataNameLabel.setFont(font)
         self.ModelSettingDataNameLabel.setScaledContents(True)
         self.ModelSettingDataNameLabel.setObjectName("ModelSettingDataNameLabel")
-        self.ModelSettingFrame = QtWidgets.QFrame(parent=ModelSettings)
-        self.ModelSettingFrame.setGeometry(QtCore.QRect(20, 80, 591, 451))
-        self.ModelSettingFrame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
-        self.ModelSettingFrame.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
-        self.ModelSettingFrame.setObjectName("ModelSettingFrame")
-        self.ModelSettingScrollArea = QtWidgets.QScrollArea(parent=ModelSettings)
-        self.ModelSettingScrollArea.setGeometry(QtCore.QRect(620, 10, 171, 521))
-        self.ModelSettingScrollArea.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
-        self.ModelSettingScrollArea.setWidgetResizable(True)
-        self.ModelSettingScrollArea.setObjectName("ModelSettingScrollArea")
-        self.ModelSettingScrollAreaContents = QtWidgets.QWidget()
-        self.ModelSettingScrollAreaContents.setGeometry(QtCore.QRect(0, 0, 169, 519))
-        self.ModelSettingScrollAreaContents.setObjectName(
-            "ModelSettingScrollAreaContents"
+        self.ModelSettingComponentScrollArea = QtWidgets.QScrollArea(
+            parent=ModelSettings
         )
-        self.ModelSettingScrollArea.setWidget(self.ModelSettingScrollAreaContents)
+        self.ModelSettingComponentScrollArea.setGeometry(
+            QtCore.QRect(620, 10, 171, 521)
+        )
+        self.ModelSettingComponentScrollArea.setFrameShadow(
+            QtWidgets.QFrame.Shadow.Sunken
+        )
+        self.ModelSettingComponentScrollArea.setWidgetResizable(True)
+        self.ModelSettingComponentScrollArea.setObjectName(
+            "ModelSettingComponentScrollArea"
+        )
+        self.ModelSettingComponentScrollAreaContents = QtWidgets.QWidget()
+        self.ModelSettingComponentScrollAreaContents.setGeometry(
+            QtCore.QRect(0, 0, 169, 519)
+        )
+        self.ModelSettingComponentScrollAreaContents.setObjectName(
+            "ModelSettingComponentScrollAreaContents"
+        )
+        self.ModelSettingComponentScrollArea.setWidget(
+            self.ModelSettingComponentScrollAreaContents
+        )
         self.layoutWidget_5 = QtWidgets.QWidget(parent=ModelSettings)
         self.layoutWidget_5.setGeometry(QtCore.QRect(520, 530, 271, 61))
         self.layoutWidget_5.setObjectName("layoutWidget_5")
@@ -169,6 +181,25 @@ class ModelSettingsDialog(object):
             self.ModelSettingTopBottomRightButtons
         )
         self.ModelSettingTopButtons.addLayout(self.ModelSettingTopRightLayout)
+        self.InfoLabel = QtWidgets.QLabel(parent=ModelSettings)
+        self.InfoLabel.setGeometry(QtCore.QRect(10, 75, 601, 21))
+        self.InfoLabel.setObjectName("InfoLabel")
+        self.ModelSettingDiagramScrollArea = QtWidgets.QScrollArea(parent=ModelSettings)
+        self.ModelSettingDiagramScrollArea.setGeometry(QtCore.QRect(10, 100, 601, 431))
+        self.ModelSettingDiagramScrollArea.setWidgetResizable(True)
+        self.ModelSettingDiagramScrollArea.setObjectName(
+            "ModelSettingDiagramScrollArea"
+        )
+        self.ModelSettingDiagramScrollAreaContents = QtWidgets.QWidget()
+        self.ModelSettingDiagramScrollAreaContents.setGeometry(
+            QtCore.QRect(0, 0, 599, 429)
+        )
+        self.ModelSettingDiagramScrollAreaContents.setObjectName(
+            "ModelSettingDiagramScrollAreaContents"
+        )
+        self.ModelSettingDiagramScrollArea.setWidget(
+            self.ModelSettingDiagramScrollAreaContents
+        )
 
         self.retranslateUi(ModelSettings)
         self.ModelSettingDiagramComboBox.currentIndexChanged["int"].connect(ModelSettings.modelSettingDiagramComboBoxChanged)  # type: ignore
@@ -196,10 +227,14 @@ class ModelSettingsDialog(object):
             self.ModelSettingClearAllComponentsBotton,
         )
         ModelSettings.setTabOrder(
-            self.ModelSettingClearAllComponentsBotton, self.ModelSettingScrollArea
+            self.ModelSettingClearAllComponentsBotton,
+            self.ModelSettingDiagramScrollArea,
         )
         ModelSettings.setTabOrder(
-            self.ModelSettingScrollArea, self.ModelSettingPreviousDataButton
+            self.ModelSettingDiagramScrollArea, self.ModelSettingComponentScrollArea
+        )
+        ModelSettings.setTabOrder(
+            self.ModelSettingComponentScrollArea, self.ModelSettingPreviousDataButton
         )
         ModelSettings.setTabOrder(
             self.ModelSettingPreviousDataButton, self.ModelSettingNextDataButton
@@ -230,16 +265,17 @@ class ModelSettingsDialog(object):
         self.ModelSettingApplyToAllDataButton.setText(
             _translate("ModelSettings", "应用到全部数据")
         )
+        self.InfoLabel.setText(
+            _translate("ModelSettings", "https://www.youtube.com/watch?v=K1eE7fvQbEE")
+        )
 
     def customUIs(self):
-        frame = self.ModelSettingFrame
-        layout = QtWidgets.QVBoxLayout(frame)
-        self.frameLabel = QtWidgets.QLabel(frame)
-        self.frameLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(self.frameLabel)
+        self.componentLayout = QtWidgets.QVBoxLayout()
+        self.ModelSettingComponentScrollAreaContents.setLayout(self.componentLayout)
 
-        self.buttonLayout = QtWidgets.QVBoxLayout()
-        self.ModelSettingScrollAreaContents.setLayout(self.buttonLayout)
+        self.diagramLayout = QtWidgets.QHBoxLayout()
+        self.diagramLayout.setSpacing(0)
+        self.ModelSettingDiagramScrollAreaContents.setLayout(self.diagramLayout)
 
         self.populateCircuitPrototypeComponents()
         self.setupCircuitPrototypeComponentsScrollArea()
@@ -247,7 +283,7 @@ class ModelSettingsDialog(object):
         self.setupSubWidgets()
 
     def setupComponents(self):
-        self.circuits = [None for _ in range(len(self.dataNames))]
+        self.circuitPrototypes = [None for _ in range(len(self.dataNames))]
 
         self.invaildRead = False
         setAllCircuitsToLastUsedCircuit = False
@@ -267,8 +303,10 @@ class ModelSettingsDialog(object):
             self.ModelSettingDiagramComboBox.setCurrentText(
                 self.modelSettings["Last Used Circuit Name"]
             )
-            circuit = self.getCurrentCircuitPrototype()
-            self.circuits = [circuit for _ in range(len(self.dataNames))]
+            circuitPrototype = self.getCurrentCircuitPrototype()
+            self.circuitPrototypes = [
+                circuitPrototype for _ in range(len(self.dataNames))
+            ]
 
         self.updateUIs()
 
@@ -285,11 +323,13 @@ class ModelSettingsDialog(object):
         if self.getCurrentCircuitPrototype() is None:
             disable = True
 
-        self.ModelSettingScrollArea.setDisabled(disable)
+        self.ModelSettingComponentScrollArea.setDisabled(disable)
         self.ModelSettingChangeCircuitNameButton.setDisabled(disable)
         self.ModelSettingClearAllComponentsBotton.setDisabled(disable)
         if not disable:
-            self.circuits[self.circuitIndex] = self.getCurrentCircuitPrototype()
+            self.circuitPrototypes[self.circuitIndex] = (
+                self.getCurrentCircuitPrototype()
+            )
             self.modelSettings["Last Used Circuit Name"] = (
                 self.ModelSettingDiagramComboBox.currentText()
             )
@@ -300,23 +340,12 @@ class ModelSettingsDialog(object):
         )
 
     def populateCircuitPrototypeComponents(self):
-        self.circuitPrototypeComponents = {}
-
-        allAttributes = dir(Components)
-        componentNames = [attr for attr in allAttributes if not attr.startswith("__")]
-        componentNames.remove("ComponentBase")
-
-        for componentName in componentNames:
-            ref = getattr(Components, componentName)
-            if isinstance(ref, type):
-                self.circuitPrototypeComponents[componentName] = ref()
-            else:
-                print(f"Model Settings: The ref of {componentName} is not a type")
+        self.circuitPrototypeComponents = Circuit.circuitPrototypeComponents
 
     def setupCircuitPrototypeComponentsScrollArea(self):
-        buttonLayout = self.buttonLayout
-        while buttonLayout.count() > 0:
-            item = buttonLayout.takeAt(0)
+        componentLayout = self.componentLayout
+        while componentLayout.count() > 0:
+            item = componentLayout.takeAt(0)
             widget = item.widget()
             if widget is not None:
                 widget.deleteLater()
@@ -331,22 +360,53 @@ class ModelSettingsDialog(object):
             button.clicked.connect(
                 lambda _, x=moduleName: self.componentsButtonClicked(x)
             )
-            buttonLayout.addWidget(button)
+            componentLayout.addWidget(button)
 
     def getCurrentCircuitPrototype(self):
-        currentCircuit = None
+        currentCircuitPrototype = None
 
         displayName = self.ModelSettingDiagramComboBox.currentText()
         if displayName in self.circuitPrototypeSectionNames.keys():
             sectionName = self.circuitPrototypeSectionNames[displayName]
-            currentCircuit = self.circuitPrototypes[sectionName]
+            currentCircuitPrototype = self.circuitPrototypeDict[sectionName]
 
-        return currentCircuit
+        return currentCircuitPrototype
+
+    def getCircuitsFromCircuitPrototypes(self):
+        circuits = []
+        if None in self.circuitPrototypes:
+            return [None for _ in range(len(self.circuitPrototypes))]
+
+        for circuitPrototype, ringCount in zip(self.circuitPrototypes, self.ringCounts):
+            displayName = str(circuitPrototype.displayName)
+            componentNames = list(circuitPrototype.componentNames)
+            structure = list(circuitPrototype.structure)
+
+            if componentNames[-1] == "Filling":
+                componentNames.pop()
+                structure.pop()
+                componentName = componentNames[-1]
+                for _ in range(ringCount - 1):
+                    componentNames.append(componentName)
+                    structure.append(len(componentNames))
+
+            circuitInfo = {
+                "Display Name": displayName,
+                "Component Names": componentNames,
+                "Structure": structure,
+            }
+            circuit = Circuit.Circuit(circuitInfo)
+            circuits.append(circuit)
+
+        return circuits
 
     def componentsButtonClicked(self, name: str):
-        currentCircuit = self.getCurrentCircuitPrototype()
-        currentCircuit.componentNames.append(name)
-        currentCircuit.updateComponentInfos()
+        currentCircuitPrototype = self.getCurrentCircuitPrototype()
+        currentCircuitPrototype.componentNames.append(name)
+        currentCircuitPrototype.updateComponentInfos()
+        currentCircuitPrototype.structure.append(
+            len(currentCircuitPrototype.componentNames)
+        )
 
         self.updateCircuitPrototypeDiagram()
 
@@ -359,43 +419,124 @@ class ModelSettingsDialog(object):
 
         combobox.blockSignals(True)
         combobox.clear()
-        for circuitPrototype in self.circuitPrototypes.values():
+        for circuitPrototype in self.circuitPrototypeDict.values():
             combobox.addItem(circuitPrototype.displayName)
 
         combobox.setCurrentText(oldChoice)
         combobox.blockSignals(False)
 
+    def clearDiagram(self):
+        layout = self.diagramLayout
+        while layout.count() > 0:
+            item = layout.takeAt(0)
+            widget = item.widget()
+            if not widget is None:
+                widget.deleteLater()
+            layout.removeItem(item)
+
+    def updateCircuitPrototypeFromDiagram(self):
+        structure = []
+        componentNames = []
+
+        layout = self.diagramLayout
+        before = 0
+        for i in range(layout.count()):
+            item = layout.itemAt(i)
+            widget = item.widget()
+            if isinstance(widget, DragWidget):
+                count = widget.getItemCount()
+                if count == 0:
+                    continue
+
+                structure.append(before + count)
+                before += count
+                for name in widget.getItemData():
+                    componentNames.append(name)
+
+        currentCircuitPrototype = self.getCurrentCircuitPrototype()
+        currentCircuitPrototype.structure = structure
+        currentCircuitPrototype.componentNames = componentNames
+        currentCircuitPrototype.updateComponentInfos()
+
+        self.updateCircuitPrototypeDiagram()
+
+    def getNewDiagramSection(self) -> DragWidget:
+        section = DragWidget(orientation=QtCore.Qt.Orientation.Vertical)
+        # section._dragTargetIndicator.setFixedSize(100, self.diagramComponentHeight)
+        section.orderChanged.connect(self.updateCircuitPrototypeFromDiagram)
+        section.itemDeleted.connect(self.updateCircuitPrototypeFromDiagram)
+
+        return section
+
     def updateCircuitPrototypeDiagram(self):
-        currentCircuit = self.getCurrentCircuitPrototype()
-        if currentCircuit == None:
+        self.clearDiagram()
+
+        currentCircuitPrototype = self.getCurrentCircuitPrototype()
+        if currentCircuitPrototype is None:
             text = f"未选中任何电路，请新建一个电路"
         else:
-            name = currentCircuit.displayName
-            count = len(currentCircuit.components)
+            circuitProtoName = currentCircuitPrototype.displayName
+            count = len(currentCircuitPrototype.components)
+            sectionCount = len(currentCircuitPrototype.structure)
 
-            text = f"电路{name}已经有{count}个组件：\n"
-            componentNamesText = ", ".join(currentCircuit.componentDisplayNames)
-            text += componentNamesText
+            text = f"电路{circuitProtoName}已经有{sectionCount}个部分，{count}个组件"
 
-        self.frameLabel.setText(text)
+            # Add Empty One's At Bewteen
+            self.diagramLayout.addWidget(self.getNewDiagramSection())
+
+            start = 0
+            names = currentCircuitPrototype.componentNames
+            displayNames = currentCircuitPrototype.componentDisplayNames
+            for cut in currentCircuitPrototype.structure:
+                nameSlice = names[start:cut]
+                displayNameSlice = displayNames[start:cut]
+
+                section = self.getNewDiagramSection()
+                for name, displayName in zip(
+                    nameSlice,
+                    displayNameSlice,
+                ):
+                    item = DragItem(displayName)
+
+                    pic = QtGui.QPixmap(componentPicsDir + name + ".png")
+                    if not pic.isNull():
+                        item.setPixmap(pic)
+
+                        targetHeight = self.diagramComponentHeight
+                        rect = pic.rect()
+                        width = rect.width()
+                        height = rect.height()
+                        targetWidth = int(targetHeight * width / height)
+
+                        # item.setScaledContents(True)
+                        item.setMaximumSize(targetWidth, targetHeight)
+
+                    item.setData(name)
+                    section.addItem(item)
+
+                start = cut
+                self.diagramLayout.addWidget(section)
+                self.diagramLayout.addWidget(self.getNewDiagramSection())
+
+        self.InfoLabel.setText(text)
 
     def createNewCircuitPrototype(self):
         newCircuit = Circuit.Circuit()
         i = 1
-        keys = self.circuitPrototypes.keys()
+        keys = self.circuitPrototypeDict.keys()
         while f"New Circuit {i}" in keys:
             i += 1
         displayName = f"New Circuit {i}"
         newCircuit.displayName = displayName
 
         sectionName = displayName
-        self.circuitPrototypes[sectionName] = newCircuit
+        self.circuitPrototypeDict[sectionName] = newCircuit
         self.circuitPrototypeSectionNames[newCircuit.displayName] = sectionName
 
         self.updateCircuitPrototypesComboBox()
         self.ModelSettingDiagramComboBox.setCurrentText(displayName)
 
-        self.frameLabel.setText("已创建新电路图！")
+        self.InfoLabel.setText("已创建新电路图！")
 
         self.updateUIs()
 
@@ -425,13 +566,17 @@ class ModelSettingsDialog(object):
             circuitInfo["Component Names"] = circuitInfo["Component Names"].split(
                 circuitInfoSplitText
             )
+            temp = circuitInfo["Structure"].split(circuitInfoSplitText)
+            circuitInfo["Structure"] = [int(s) for s in temp]
         if direction == "use to config":
             circuitInfo["Component Names"] = circuitInfoSplitText.join(
                 circuitInfo["Component Names"]
             )
+            temp = [str(n) for n in circuitInfo["Structure"]]
+            circuitInfo["Structure"] = circuitInfoSplitText.join(temp)
 
     def readCircuitPrototypes(self):
-        self.circuitPrototypes = {}
+        self.circuitPrototypeDict = {}
         self.circuitPrototypeSectionNames = {}
 
         config = configparser.ConfigParser()
@@ -440,7 +585,11 @@ class ModelSettingsDialog(object):
         if len(config.sections()) != 0:
             atleastOneVaild = False
             for sectionName in config.sections():
-                circuitInfo = {"Display Name": "", "Component Names": ""}
+                circuitInfo = {
+                    "Display Name": "",
+                    "Component Names": "",
+                    "Structure": "",
+                }
 
                 vaildData = True
                 for key in circuitInfo.keys():
@@ -456,7 +605,7 @@ class ModelSettingsDialog(object):
 
                     self.transformCircuitInfo(circuitInfo, "config to use")
                     circuitPrototype = Circuit.Circuit(circuitInfo)
-                    self.circuitPrototypes[sectionName] = circuitPrototype
+                    self.circuitPrototypeDict[sectionName] = circuitPrototype
                     self.circuitPrototypeSectionNames[circuitPrototype.displayName] = (
                         sectionName
                     )
@@ -469,13 +618,14 @@ class ModelSettingsDialog(object):
     def writeCircuitPrototypes(self):
         config = configparser.ConfigParser()
 
-        for sectionName, circuitPrototype in self.circuitPrototypes.items():
+        for sectionName, circuitPrototype in self.circuitPrototypeDict.items():
             if len(circuitPrototype.components) == 0:
                 continue
 
             circuitInfo = {}
             circuitInfo["Display Name"] = circuitPrototype.displayName
             circuitInfo["Component Names"] = circuitPrototype.componentNames
+            circuitInfo["Structure"] = circuitPrototype.structure
             self.transformCircuitInfo(circuitInfo, "use to config")
 
             config[sectionName] = circuitInfo
@@ -484,7 +634,8 @@ class ModelSettingsDialog(object):
             config.write(configfile)
 
     def emitCircuits(self):
-        self.circuitsSignal.emit(self.circuits)
+        circuits = self.getCircuitsFromCircuitPrototypes()
+        self.circuitsSignal.emit(circuits)
 
     def modelSettingDiagramComboBoxChanged(self):
         self.updateUIs()
@@ -492,15 +643,15 @@ class ModelSettingsDialog(object):
     def modelSettingChangeCircuitNameButtonClicked(self):
         existedSectionName = list(self.circuitPrototypeSectionNames.values())
 
-        currentCircuit = self.getCurrentCircuitPrototype()
+        currentCircuitPrototype = self.getCurrentCircuitPrototype()
         currentCircuitSectionName = self.circuitPrototypeSectionNames[
-            currentCircuit.displayName
+            currentCircuitPrototype.displayName
         ]
         existedSectionName.remove(currentCircuitSectionName)
 
         self.changeCircuitNameDialog.existedSectionName = existedSectionName
         self.changeCircuitNameDialog.displayNameLineEdit.setText(
-            currentCircuit.displayName
+            currentCircuitPrototype.displayName
         )
         self.changeCircuitNameDialog.sectionNameLineEdit.setText(
             currentCircuitSectionName
@@ -508,16 +659,16 @@ class ModelSettingsDialog(object):
         self.changeCircuitNameDialog.show()
 
     def receiveCircuitName(self, names: dict):
-        currentCircuit = self.getCurrentCircuitPrototype()
-        oldDisplayName = currentCircuit.displayName
+        currentCircuitPrototype = self.getCurrentCircuitPrototype()
+        oldDisplayName = currentCircuitPrototype.displayName
         oldSectionName = self.circuitPrototypeSectionNames[oldDisplayName]
 
         displayName = names["Display Name"]
         sectionName = names["Section Name"]
 
-        currentCircuit.displayName = displayName
-        self.circuitPrototypes.pop(oldSectionName)
-        self.circuitPrototypes[sectionName] = currentCircuit
+        currentCircuitPrototype.displayName = displayName
+        self.circuitPrototypeDict.pop(oldSectionName)
+        self.circuitPrototypeDict[sectionName] = currentCircuitPrototype
         self.circuitPrototypeSectionNames.pop(oldDisplayName)
         self.circuitPrototypeSectionNames[displayName] = sectionName
 
@@ -530,31 +681,36 @@ class ModelSettingsDialog(object):
         self.createNewCircuitPrototype()
 
     def modelSettingClearAllComponentsButtonClicked(self):
-        currentCircuit = self.getCurrentCircuitPrototype()
-        currentCircuit.componentNames = []
-        currentCircuit.updateComponentInfos()
+        currentCircuitPrototype = self.getCurrentCircuitPrototype()
+        currentCircuitPrototype.componentNames = []
+        currentCircuitPrototype.structure = []
+        currentCircuitPrototype.updateComponentInfos()
         self.updateCircuitPrototypeDiagram()
 
     def modelSettingApplyToAllDataButtonClicked(self):
-        currentCircuit = self.getCurrentCircuitPrototype()
+        currentCircuitPrototype = self.getCurrentCircuitPrototype()
 
         length = len(self.dataNames)
 
-        self.circuits = []
+        self.circuitPrototypes = []
         for _ in range(length):
-            self.circuits.append(currentCircuit)
+            self.circuitPrototypes.append(currentCircuitPrototype)
 
     def modelSettingPreviousDataButtonClicked(self):
         if self.circuitIndex > 0:
             self.circuitIndex -= 1
             self.updateUIs()
-            self.circuits[self.circuitIndex] = self.getCurrentCircuitPrototype()
+            self.circuitPrototypes[self.circuitIndex] = (
+                self.getCurrentCircuitPrototype()
+            )
 
     def modelSettingNextDataButtonClicked(self):
         if self.circuitIndex < len(self.dataNames) - 1:
             self.circuitIndex += 1
             self.updateUIs()
-            self.circuits[self.circuitIndex] = self.getCurrentCircuitPrototype()
+            self.circuitPrototypes[self.circuitIndex] = (
+                self.getCurrentCircuitPrototype()
+            )
 
     def modelSettingBackButtonClicked(self):
         self.close()
