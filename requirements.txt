@@ -6,3 +6,4 @@ matplotlib
 schemdraw
 PyQt6
 send2trash
+pyqt-advanced-slider

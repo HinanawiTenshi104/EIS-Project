@@ -1,6 +1,7 @@
 import configparser
 
 from PyQt6 import QtCore, QtGui, QtWidgets
+from pyqt_advanced_slider import Slider
 
 import DataProcessor
 import DrawDiagram
@@ -116,7 +117,7 @@ class PreprocessSettingDialog(object):
         self.preprocessSwitchTable.verticalHeader().setDefaultSectionSize(30)
         self.preprocessSwitchLayout.addWidget(self.preprocessSwitchTable)
         self.layoutWidget1 = QtWidgets.QWidget(parent=PreprocessSettingDialog)
-        self.layoutWidget1.setGeometry(QtCore.QRect(10, 102, 511, 361))
+        self.layoutWidget1.setGeometry(QtCore.QRect(10, 102, 511, 382))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.OptionsLayout = QtWidgets.QFormLayout(self.layoutWidget1)
         self.OptionsLayout.setContentsMargins(0, 0, 0, 0)
@@ -156,7 +157,7 @@ class PreprocessSettingDialog(object):
         )
         self.filterOptionsTable.setObjectName("filterOptionsTable")
         self.filterOptionsTable.setColumnCount(1)
-        self.filterOptionsTable.setRowCount(5)
+        self.filterOptionsTable.setRowCount(4)
         item = QtWidgets.QTableWidgetItem()
         self.filterOptionsTable.setVerticalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -165,8 +166,6 @@ class PreprocessSettingDialog(object):
         self.filterOptionsTable.setVerticalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
         self.filterOptionsTable.setVerticalHeaderItem(3, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.filterOptionsTable.setVerticalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
         self.filterOptionsTable.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -177,8 +176,6 @@ class PreprocessSettingDialog(object):
         self.filterOptionsTable.setItem(2, 0, item)
         item = QtWidgets.QTableWidgetItem()
         self.filterOptionsTable.setItem(3, 0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.filterOptionsTable.setItem(4, 0, item)
         self.filterOptionsTable.horizontalHeader().setDefaultSectionSize(100)
         self.filterOptionsTable.horizontalHeader().setMinimumSectionSize(31)
         self.filterOptionsTable.verticalHeader().setDefaultSectionSize(30)
@@ -189,62 +186,6 @@ class PreprocessSettingDialog(object):
         self.cutofferOptionsLayout = QtWidgets.QVBoxLayout()
         self.cutofferOptionsLayout.setSpacing(0)
         self.cutofferOptionsLayout.setObjectName("cutofferOptionsLayout")
-        self.staticLabel3 = QtWidgets.QLabel(parent=self.layoutWidget1)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum
-        )
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.staticLabel3.sizePolicy().hasHeightForWidth())
-        self.staticLabel3.setSizePolicy(sizePolicy)
-        self.staticLabel3.setMaximumSize(QtCore.QSize(16777215, 20))
-        font = QtGui.QFont()
-        font.setFamily("黑体")
-        font.setPointSize(11)
-        self.staticLabel3.setFont(font)
-        self.staticLabel3.setObjectName("staticLabel3")
-        self.cutofferOptionsLayout.addWidget(self.staticLabel3)
-        self.cutofferOptionsTable = QtWidgets.QTableWidget(parent=self.layoutWidget1)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Maximum, QtWidgets.QSizePolicy.Policy.Maximum
-        )
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.cutofferOptionsTable.sizePolicy().hasHeightForWidth()
-        )
-        self.cutofferOptionsTable.setSizePolicy(sizePolicy)
-        self.cutofferOptionsTable.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.cutofferOptionsTable.setVerticalScrollBarPolicy(
-            QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded
-        )
-        self.cutofferOptionsTable.setObjectName("cutofferOptionsTable")
-        self.cutofferOptionsTable.setColumnCount(1)
-        self.cutofferOptionsTable.setRowCount(3)
-        item = QtWidgets.QTableWidgetItem()
-        self.cutofferOptionsTable.setVerticalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.cutofferOptionsTable.setVerticalHeaderItem(1, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.cutofferOptionsTable.setVerticalHeaderItem(2, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.cutofferOptionsTable.setHorizontalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.cutofferOptionsTable.setItem(0, 0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.cutofferOptionsTable.setItem(1, 0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.cutofferOptionsTable.setItem(2, 0, item)
-        self.cutofferOptionsTable.horizontalHeader().setDefaultSectionSize(100)
-        self.cutofferOptionsTable.horizontalHeader().setMinimumSectionSize(31)
-        self.cutofferOptionsTable.verticalHeader().setDefaultSectionSize(30)
-        self.cutofferOptionsLayout.addWidget(self.cutofferOptionsTable)
-        self.OptionsLayout.setLayout(
-            0, QtWidgets.QFormLayout.ItemRole.FieldRole, self.cutofferOptionsLayout
-        )
-        self.interpolaterOptionsLayout = QtWidgets.QVBoxLayout()
-        self.interpolaterOptionsLayout.setSpacing(0)
-        self.interpolaterOptionsLayout.setObjectName("interpolaterOptionsLayout")
         self.staticLabel4 = QtWidgets.QLabel(parent=self.layoutWidget1)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum
@@ -259,7 +200,7 @@ class PreprocessSettingDialog(object):
         font.setPointSize(11)
         self.staticLabel4.setFont(font)
         self.staticLabel4.setObjectName("staticLabel4")
-        self.interpolaterOptionsLayout.addWidget(self.staticLabel4)
+        self.cutofferOptionsLayout.addWidget(self.staticLabel4)
         self.interpolaterOptionsTable = QtWidgets.QTableWidget(
             parent=self.layoutWidget1
         )
@@ -298,13 +239,13 @@ class PreprocessSettingDialog(object):
         self.interpolaterOptionsTable.horizontalHeader().setDefaultSectionSize(100)
         self.interpolaterOptionsTable.horizontalHeader().setMinimumSectionSize(31)
         self.interpolaterOptionsTable.verticalHeader().setDefaultSectionSize(30)
-        self.interpolaterOptionsLayout.addWidget(self.interpolaterOptionsTable)
+        self.cutofferOptionsLayout.addWidget(self.interpolaterOptionsTable)
         self.OptionsLayout.setLayout(
-            1, QtWidgets.QFormLayout.ItemRole.LabelRole, self.interpolaterOptionsLayout
+            0, QtWidgets.QFormLayout.ItemRole.FieldRole, self.cutofferOptionsLayout
         )
-        self.smootherOptionsLayout = QtWidgets.QVBoxLayout()
-        self.smootherOptionsLayout.setSpacing(0)
-        self.smootherOptionsLayout.setObjectName("smootherOptionsLayout")
+        self.interpolaterOptionsLayout = QtWidgets.QVBoxLayout()
+        self.interpolaterOptionsLayout.setSpacing(0)
+        self.interpolaterOptionsLayout.setObjectName("interpolaterOptionsLayout")
         self.staticLabel5 = QtWidgets.QLabel(parent=self.layoutWidget1)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum
@@ -319,7 +260,7 @@ class PreprocessSettingDialog(object):
         font.setPointSize(11)
         self.staticLabel5.setFont(font)
         self.staticLabel5.setObjectName("staticLabel5")
-        self.smootherOptionsLayout.addWidget(self.staticLabel5)
+        self.interpolaterOptionsLayout.addWidget(self.staticLabel5)
         self.smootherOptionsTable = QtWidgets.QTableWidget(parent=self.layoutWidget1)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Maximum, QtWidgets.QSizePolicy.Policy.Maximum
@@ -350,13 +291,13 @@ class PreprocessSettingDialog(object):
         self.smootherOptionsTable.horizontalHeader().setDefaultSectionSize(100)
         self.smootherOptionsTable.horizontalHeader().setMinimumSectionSize(31)
         self.smootherOptionsTable.verticalHeader().setDefaultSectionSize(30)
-        self.smootherOptionsLayout.addWidget(self.smootherOptionsTable)
+        self.interpolaterOptionsLayout.addWidget(self.smootherOptionsTable)
         self.OptionsLayout.setLayout(
-            1, QtWidgets.QFormLayout.ItemRole.FieldRole, self.smootherOptionsLayout
+            1, QtWidgets.QFormLayout.ItemRole.LabelRole, self.interpolaterOptionsLayout
         )
-        self.downsamplerOptionsLayout = QtWidgets.QVBoxLayout()
-        self.downsamplerOptionsLayout.setSpacing(0)
-        self.downsamplerOptionsLayout.setObjectName("downsamplerOptionsLayout")
+        self.smootherOptionsLayout = QtWidgets.QVBoxLayout()
+        self.smootherOptionsLayout.setSpacing(0)
+        self.smootherOptionsLayout.setObjectName("smootherOptionsLayout")
         self.staticLabel6 = QtWidgets.QLabel(parent=self.layoutWidget1)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum
@@ -371,7 +312,7 @@ class PreprocessSettingDialog(object):
         font.setPointSize(11)
         self.staticLabel6.setFont(font)
         self.staticLabel6.setObjectName("staticLabel6")
-        self.downsamplerOptionsLayout.addWidget(self.staticLabel6)
+        self.smootherOptionsLayout.addWidget(self.staticLabel6)
         self.downsamplerOptionsTable = QtWidgets.QTableWidget(parent=self.layoutWidget1)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Maximum, QtWidgets.QSizePolicy.Policy.Maximum
@@ -398,9 +339,61 @@ class PreprocessSettingDialog(object):
         self.downsamplerOptionsTable.horizontalHeader().setDefaultSectionSize(100)
         self.downsamplerOptionsTable.horizontalHeader().setMinimumSectionSize(31)
         self.downsamplerOptionsTable.verticalHeader().setDefaultSectionSize(30)
-        self.downsamplerOptionsLayout.addWidget(self.downsamplerOptionsTable)
+        self.smootherOptionsLayout.addWidget(self.downsamplerOptionsTable)
         self.OptionsLayout.setLayout(
-            2, QtWidgets.QFormLayout.ItemRole.LabelRole, self.downsamplerOptionsLayout
+            1, QtWidgets.QFormLayout.ItemRole.FieldRole, self.smootherOptionsLayout
+        )
+        self.downsamplerOptionsLayout = QtWidgets.QVBoxLayout()
+        self.downsamplerOptionsLayout.setSpacing(0)
+        self.downsamplerOptionsLayout.setObjectName("downsamplerOptionsLayout")
+        self.staticLabel3 = QtWidgets.QLabel(parent=self.layoutWidget1)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.staticLabel3.sizePolicy().hasHeightForWidth())
+        self.staticLabel3.setSizePolicy(sizePolicy)
+        self.staticLabel3.setMaximumSize(QtCore.QSize(16777215, 20))
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(11)
+        self.staticLabel3.setFont(font)
+        self.staticLabel3.setObjectName("staticLabel3")
+        self.downsamplerOptionsLayout.addWidget(self.staticLabel3)
+        self.cutofferOptionsTable = QtWidgets.QTableWidget(parent=self.layoutWidget1)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Maximum, QtWidgets.QSizePolicy.Policy.Maximum
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.cutofferOptionsTable.sizePolicy().hasHeightForWidth()
+        )
+        self.cutofferOptionsTable.setSizePolicy(sizePolicy)
+        self.cutofferOptionsTable.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.cutofferOptionsTable.setVerticalScrollBarPolicy(
+            QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded
+        )
+        self.cutofferOptionsTable.setObjectName("cutofferOptionsTable")
+        self.cutofferOptionsTable.setColumnCount(1)
+        self.cutofferOptionsTable.setRowCount(2)
+        item = QtWidgets.QTableWidgetItem()
+        self.cutofferOptionsTable.setVerticalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.cutofferOptionsTable.setVerticalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.cutofferOptionsTable.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.cutofferOptionsTable.setItem(0, 0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.cutofferOptionsTable.setItem(1, 0, item)
+        self.cutofferOptionsTable.horizontalHeader().setDefaultSectionSize(100)
+        self.cutofferOptionsTable.horizontalHeader().setMinimumSectionSize(31)
+        self.cutofferOptionsTable.verticalHeader().setDefaultSectionSize(30)
+        self.downsamplerOptionsLayout.addWidget(self.cutofferOptionsTable)
+        self.OptionsLayout.setLayout(
+            3, QtWidgets.QFormLayout.ItemRole.LabelRole, self.downsamplerOptionsLayout
         )
         self.bottomButtonsLayout = QtWidgets.QVBoxLayout()
         self.bottomButtonsLayout.setObjectName("bottomButtonsLayout")
@@ -430,7 +423,7 @@ class PreprocessSettingDialog(object):
         self.bottomButtons.addWidget(self.cancelButton)
         self.bottomButtonsLayout.addWidget(self.bottomButtonFrame)
         self.OptionsLayout.setLayout(
-            2, QtWidgets.QFormLayout.ItemRole.FieldRole, self.bottomButtonsLayout
+            3, QtWidgets.QFormLayout.ItemRole.FieldRole, self.bottomButtonsLayout
         )
         self.preprocessResultLabel = QtWidgets.QLabel(parent=PreprocessSettingDialog)
         self.preprocessResultLabel.setGeometry(QtCore.QRect(530, 50, 381, 381))
@@ -498,13 +491,7 @@ class PreprocessSettingDialog(object):
         self.PreprocessSettingNextDataButton.clicked.connect(PreprocessSettingDialog.nextDataButtonClicked)  # type: ignore
         QtCore.QMetaObject.connectSlotsByName(PreprocessSettingDialog)
         PreprocessSettingDialog.setTabOrder(
-            self.preprocessSwitchTable, self.filterOptionsTable
-        )
-        PreprocessSettingDialog.setTabOrder(
-            self.filterOptionsTable, self.cutofferOptionsTable
-        )
-        PreprocessSettingDialog.setTabOrder(
-            self.cutofferOptionsTable, self.interpolaterOptionsTable
+            self.filterOptionsTable, self.interpolaterOptionsTable
         )
         PreprocessSettingDialog.setTabOrder(
             self.interpolaterOptionsTable, self.smootherOptionsTable
@@ -513,8 +500,9 @@ class PreprocessSettingDialog(object):
             self.smootherOptionsTable, self.downsamplerOptionsTable
         )
         PreprocessSettingDialog.setTabOrder(
-            self.downsamplerOptionsTable, self.saveButton
+            self.downsamplerOptionsTable, self.cutofferOptionsTable
         )
+        PreprocessSettingDialog.setTabOrder(self.cutofferOptionsTable, self.saveButton)
         PreprocessSettingDialog.setTabOrder(self.saveButton, self.cancelButton)
         PreprocessSettingDialog.setTabOrder(
             self.cancelButton, self.PreprocessSettingPreviousDataButton
@@ -535,13 +523,13 @@ class PreprocessSettingDialog(object):
         item = self.preprocessSwitchTable.horizontalHeaderItem(0)
         item.setText(_translate("PreprocessSettingDialog", "过滤器"))
         item = self.preprocessSwitchTable.horizontalHeaderItem(1)
-        item.setText(_translate("PreprocessSettingDialog", "截断器"))
-        item = self.preprocessSwitchTable.horizontalHeaderItem(2)
         item.setText(_translate("PreprocessSettingDialog", "插值器"))
-        item = self.preprocessSwitchTable.horizontalHeaderItem(3)
+        item = self.preprocessSwitchTable.horizontalHeaderItem(2)
         item.setText(_translate("PreprocessSettingDialog", "平滑器"))
-        item = self.preprocessSwitchTable.horizontalHeaderItem(4)
+        item = self.preprocessSwitchTable.horizontalHeaderItem(3)
         item.setText(_translate("PreprocessSettingDialog", "降采样器"))
+        item = self.preprocessSwitchTable.horizontalHeaderItem(4)
+        item.setText(_translate("PreprocessSettingDialog", "截断器"))
         __sortingEnabled = self.preprocessSwitchTable.isSortingEnabled()
         self.preprocessSwitchTable.setSortingEnabled(False)
         self.preprocessSwitchTable.setSortingEnabled(__sortingEnabled)
@@ -551,42 +539,14 @@ class PreprocessSettingDialog(object):
         item = self.filterOptionsTable.verticalHeaderItem(1)
         item.setText(_translate("PreprocessSettingDialog", "标准差阈值"))
         item = self.filterOptionsTable.verticalHeaderItem(2)
-        item.setText(_translate("PreprocessSettingDialog", "导数标准差阈值"))
-        item = self.filterOptionsTable.verticalHeaderItem(3)
         item.setText(_translate("PreprocessSettingDialog", "过滤次数"))
-        item = self.filterOptionsTable.verticalHeaderItem(4)
+        item = self.filterOptionsTable.verticalHeaderItem(3)
         item.setText(_translate("PreprocessSettingDialog", "删除虚部小于0的点"))
         item = self.filterOptionsTable.horizontalHeaderItem(0)
         item.setText(_translate("PreprocessSettingDialog", "值"))
         __sortingEnabled = self.filterOptionsTable.isSortingEnabled()
         self.filterOptionsTable.setSortingEnabled(False)
-        item = self.filterOptionsTable.item(0, 0)
-        item.setText(_translate("PreprocessSettingDialog", "5"))
-        item = self.filterOptionsTable.item(1, 0)
-        item.setText(_translate("PreprocessSettingDialog", "1"))
-        item = self.filterOptionsTable.item(2, 0)
-        item.setText(_translate("PreprocessSettingDialog", "1"))
-        item = self.filterOptionsTable.item(3, 0)
-        item.setText(_translate("PreprocessSettingDialog", "-1"))
         self.filterOptionsTable.setSortingEnabled(__sortingEnabled)
-        self.staticLabel3.setText(_translate("PreprocessSettingDialog", "截断器选项："))
-        item = self.cutofferOptionsTable.verticalHeaderItem(0)
-        item.setText(_translate("PreprocessSettingDialog", "截断距离"))
-        item = self.cutofferOptionsTable.verticalHeaderItem(1)
-        item.setText(_translate("PreprocessSettingDialog", "截断左端点"))
-        item = self.cutofferOptionsTable.verticalHeaderItem(2)
-        item.setText(_translate("PreprocessSettingDialog", "截断右端点"))
-        item = self.cutofferOptionsTable.horizontalHeaderItem(0)
-        item.setText(_translate("PreprocessSettingDialog", "值"))
-        __sortingEnabled = self.cutofferOptionsTable.isSortingEnabled()
-        self.cutofferOptionsTable.setSortingEnabled(False)
-        item = self.cutofferOptionsTable.item(0, 0)
-        item.setText(_translate("PreprocessSettingDialog", "0.2"))
-        item = self.cutofferOptionsTable.item(1, 0)
-        item.setText(_translate("PreprocessSettingDialog", "0.1"))
-        item = self.cutofferOptionsTable.item(2, 0)
-        item.setText(_translate("PreprocessSettingDialog", "0.9"))
-        self.cutofferOptionsTable.setSortingEnabled(__sortingEnabled)
         self.staticLabel4.setText(_translate("PreprocessSettingDialog", "插值器选项："))
         item = self.interpolaterOptionsTable.verticalHeaderItem(0)
         item.setText(_translate("PreprocessSettingDialog", "插值公式"))
@@ -600,12 +560,6 @@ class PreprocessSettingDialog(object):
         item.setText(_translate("PreprocessSettingDialog", "值"))
         __sortingEnabled = self.interpolaterOptionsTable.isSortingEnabled()
         self.interpolaterOptionsTable.setSortingEnabled(False)
-        item = self.interpolaterOptionsTable.item(1, 0)
-        item.setText(_translate("PreprocessSettingDialog", "0.6"))
-        item = self.interpolaterOptionsTable.item(2, 0)
-        item.setText(_translate("PreprocessSettingDialog", "4.5"))
-        item = self.interpolaterOptionsTable.item(3, 0)
-        item.setText(_translate("PreprocessSettingDialog", "100"))
         self.interpolaterOptionsTable.setSortingEnabled(__sortingEnabled)
         self.staticLabel5.setText(_translate("PreprocessSettingDialog", "平滑器选项："))
         item = self.smootherOptionsTable.verticalHeaderItem(0)
@@ -616,10 +570,6 @@ class PreprocessSettingDialog(object):
         item.setText(_translate("PreprocessSettingDialog", "值"))
         __sortingEnabled = self.smootherOptionsTable.isSortingEnabled()
         self.smootherOptionsTable.setSortingEnabled(False)
-        item = self.smootherOptionsTable.item(0, 0)
-        item.setText(_translate("PreprocessSettingDialog", "4"))
-        item = self.smootherOptionsTable.item(1, 0)
-        item.setText(_translate("PreprocessSettingDialog", "3"))
         self.smootherOptionsTable.setSortingEnabled(__sortingEnabled)
         self.staticLabel6.setText(
             _translate("PreprocessSettingDialog", "降采样器选项：")
@@ -630,9 +580,17 @@ class PreprocessSettingDialog(object):
         item.setText(_translate("PreprocessSettingDialog", "值"))
         __sortingEnabled = self.downsamplerOptionsTable.isSortingEnabled()
         self.downsamplerOptionsTable.setSortingEnabled(False)
-        item = self.downsamplerOptionsTable.item(0, 0)
-        item.setText(_translate("PreprocessSettingDialog", "0.01"))
         self.downsamplerOptionsTable.setSortingEnabled(__sortingEnabled)
+        self.staticLabel3.setText(_translate("PreprocessSettingDialog", "截断器选项："))
+        item = self.cutofferOptionsTable.verticalHeaderItem(0)
+        item.setText(_translate("PreprocessSettingDialog", "截断左端点"))
+        item = self.cutofferOptionsTable.verticalHeaderItem(1)
+        item.setText(_translate("PreprocessSettingDialog", "截断右端点"))
+        item = self.cutofferOptionsTable.horizontalHeaderItem(0)
+        item.setText(_translate("PreprocessSettingDialog", "值"))
+        __sortingEnabled = self.cutofferOptionsTable.isSortingEnabled()
+        self.cutofferOptionsTable.setSortingEnabled(False)
+        self.cutofferOptionsTable.setSortingEnabled(__sortingEnabled)
         self.saveButton.setText(_translate("PreprocessSettingDialog", "保存配置"))
         self.cancelButton.setText(_translate("PreprocessSettingDialog", "返回"))
         self.preprocessResultLabel.setText(
@@ -647,14 +605,53 @@ class PreprocessSettingDialog(object):
         self.tabels = [
             self.preprocessSwitchTable,
             self.filterOptionsTable,
-            self.cutofferOptionsTable,
             self.interpolaterOptionsTable,
             self.smootherOptionsTable,
             self.downsamplerOptionsTable,
+            self.cutofferOptionsTable,
         ]
+
+        self.fillTypes()
 
         self.initializeTables()
         self.updateUIs()
+
+    def fillTypes(self):
+        # Preprocess Switch
+        ints = []
+        floats = []
+        bools = [i for i in range(5)]
+        self.preprocessorSwitchTypes = {"ints": ints, "floats": floats, "bools": bools}
+
+        # Filter
+        ints = [0, 2]
+        floats = [1]
+        bools = [3]
+        self.filterTypes = {"ints": ints, "floats": floats, "bools": bools}
+
+        # Cutoffer
+        ints = []
+        floats = [i for i in range(3)]
+        bools = []
+        self.cutofferTypes = {"ints": ints, "floats": floats, "bools": bools}
+
+        # Interpolater
+        ints = [3]
+        floats = [1, 2]
+        bools = []
+        self.interpolaterTypes = {"ints": ints, "floats": floats, "bools": bools}
+
+        # Smoother
+        ints = [0, 1]
+        floats = []
+        bools = []
+        self.smootherTypes = {"ints": ints, "floats": floats, "bools": bools}
+
+        # Downsampler
+        ints = []
+        floats = [0]
+        bools = []
+        self.downSamplerTypes = {"ints": ints, "floats": floats, "bools": bools}
 
     def emitPreprocessorInfo(self):
         # print("Info emitted!")
@@ -694,7 +691,7 @@ class PreprocessSettingDialog(object):
             [str(item) for item in self.preprocessorSwitch]
         )
         filterOptionsText = splitText.join([str(item) for item in self.filterOptions])
-        cutofferList = [self.cutofferOptions[0]] + list(self.cutofferOptions[1])
+        cutofferList = list(self.cutofferOptions[0])
         cutofferOptionsText = splitText.join([str(item) for item in cutofferList])
         interpolaterOptionsText = splitText.join(
             [str(item) for item in self.interpolaterOptions]
@@ -729,7 +726,7 @@ class PreprocessSettingDialog(object):
 
         # Preprocess Switch
         empty = len(self.preprocessorSwitch) == 0
-        isEnable = [False for i in range(5)] if empty else self.preprocessorSwitch
+        isEnable = [False for _ in range(5)] if empty else self.preprocessorSwitch
         for col in range(5):
             checkbox = QtWidgets.QCheckBox()
             self.preprocessSwitchTable.setCellWidget(0, col, checkbox)
@@ -737,25 +734,36 @@ class PreprocessSettingDialog(object):
 
         # Filter
         empty = len(self.filterOptions) == 0
-        filterInit = [5, 1, 1, -1] if empty else self.filterOptions[:-1]
-        for row, val in enumerate(filterInit):
-            valItem = QtWidgets.QTableWidgetItem(str(val))
-            self.filterOptionsTable.setItem(row, 0, valItem)
+        filterInit = [5, 1, -1] if empty else self.filterOptions[:-1]
+        filterRange = [(3, 20), (0.1, 3), (-1, 10)]
+        floats = self.filterTypes["floats"]
+        for row, (val, sliderRange) in enumerate(zip(filterInit, filterRange)):
+            # valItem = QtWidgets.QTableWidgetItem(str(val))
+            # self.filterOptionsTable.setItem(row, 0, valItem)
+            slider = Slider()
+            slider.setFloat(row in floats)
+            slider.setRange(sliderRange[0], sliderRange[1])
+            slider.setValue(val)
+            self.filterOptionsTable.setCellWidget(row, 0, slider)
 
         checkbox = QtWidgets.QCheckBox()
-        self.filterOptionsTable.setCellWidget(4, 0, checkbox)
+        self.filterOptionsTable.setCellWidget(3, 0, checkbox)
         checkbox.setChecked(False if empty else self.filterOptions[-1])
 
         # Cutoffer
         empty = len(self.cutofferOptions) == 0
-        cutofferInit = (
-            [0.2, 0.1, 0.9]
-            if empty
-            else [self.cutofferOptions[0]] + list(self.cutofferOptions[1])
-        )
-        for row, val in enumerate(cutofferInit):
-            valItem = QtWidgets.QTableWidgetItem(str(val))
-            self.cutofferOptionsTable.setItem(row, 0, valItem)
+        cutofferInit = [10, 90] if empty else list(self.cutofferOptions[0])
+        cutofferRange = [(0, 100), (0, 100)]
+        floats = self.cutofferTypes["floats"]
+        for row, (val, sliderRange) in enumerate(zip(cutofferInit, cutofferRange)):
+            # valItem = QtWidgets.QTableWidgetItem(str(val))
+            # self.cutofferOptionsTable.setItem(row, 0, valItem)
+            slider = Slider()
+            slider.setFloat(row in floats)
+            slider.setRange(sliderRange[0], sliderRange[1])
+            slider.setValue(val)
+            slider.setSuffix("%")
+            self.cutofferOptionsTable.setCellWidget(row, 0, slider)
 
         # Interpolater
         empty = len(self.interpolaterOptions) == 0
@@ -764,26 +772,53 @@ class PreprocessSettingDialog(object):
         combobox.setCurrentText("10^x" if empty else self.interpolaterOptions[0])
         self.interpolaterOptionsTable.setCellWidget(0, 0, combobox)
 
-        interpolaterInit = [0.6, 4.5, 100] if empty else self.interpolaterOptions[1:]
-        for row, val in enumerate(interpolaterInit):
-            valItem = QtWidgets.QTableWidgetItem(str(val))
-            self.interpolaterOptionsTable.setItem(row + 1, 0, valItem)
+        interpolaterInit = [0.6, 4.5, 69] if empty else self.interpolaterOptions[1:]
+        interpolaterRange = [(-1, 6), (-1, 6), (10, 200)]
+        floats = self.interpolaterTypes["floats"]
+        for row, (val, sliderRange) in enumerate(
+            zip(interpolaterInit, interpolaterRange)
+        ):
+            # valItem = QtWidgets.QTableWidgetItem(str(val))
+            # self.interpolaterOptionsTable.setItem(row + 1, 0, valItem)
+            slider = Slider()
+            slider.setFloat((row + 1) in floats)
+            slider.setRange(sliderRange[0], sliderRange[1])
+            slider.setValue(val)
+            self.interpolaterOptionsTable.setCellWidget(row + 1, 0, slider)
 
         # Smoother
         empty = len(self.smootherOptions) == 0
-        smootherInit = [4, 3] if empty else self.smootherOptions
-        for row, val in enumerate(smootherInit):
-            valItem = QtWidgets.QTableWidgetItem(str(val))
-            self.smootherOptionsTable.setItem(row, 0, valItem)
+        smootherInit = [5, 2] if empty else self.smootherOptions
+        smootherRange = [(3, 20), (1, 5)]
+        floats = self.smootherTypes["floats"]
+        for row, (val, sliderRange) in enumerate(zip(smootherInit, smootherRange)):
+            # valItem = QtWidgets.QTableWidgetItem(str(val))
+            # self.smootherOptionsTable.setItem(row, 0, valItem)
+            slider = Slider()
+            slider.setFloat(row in floats)
+            slider.setRange(sliderRange[0], sliderRange[1])
+            slider.setValue(val)
+            self.smootherOptionsTable.setCellWidget(row, 0, slider)
 
         # Downsampler
         empty = len(self.downSamplerOptions) == 0
         downsamplerInit = [0.01] if empty else self.downSamplerOptions
-        for row, val in enumerate(downsamplerInit):
-            valItem = QtWidgets.QTableWidgetItem(str(val))
-            self.downsamplerOptionsTable.setItem(row, 0, valItem)
+        downsamplerRange = [(0, 0.2)]
+        floats = self.downSamplerTypes["floats"]
+        for row, (val, sliderRange) in enumerate(
+            zip(downsamplerInit, downsamplerRange)
+        ):
+            # valItem = QtWidgets.QTableWidgetItem(str(val))
+            # self.downsamplerOptionsTable.setItem(row, 0, valItem)
+            slider = Slider()
+            slider.setFloat(row in floats)
+            slider.setDecimals(3)
+            slider.setRange(sliderRange[0], sliderRange[1])
+            slider.setValue(val)
+            self.downsamplerOptionsTable.setCellWidget(row, 0, slider)
 
         self.setupTabelSignals()
+        self.sliderValueChanged()
 
         if self.invaildRead:
             self.saveOptions()
@@ -800,8 +835,42 @@ class PreprocessSettingDialog(object):
                         cellWidget.stateChanged.connect(self.updateUIs)
                     if isinstance(cellWidget, QtWidgets.QComboBox):
                         cellWidget.currentIndexChanged.connect(self.updateUIs)
+                    if isinstance(cellWidget, Slider):
+                        cellWidget.valueChanged.connect(self.sliderValueChanged)
 
             tabel.itemChanged.connect(self.updateUIs)
+
+    def updateSliderRanges(self):
+        # Cutoffer
+        sliderLeft = self.cutofferOptionsTable.cellWidget(0, 0)
+        sliderRight = self.cutofferOptionsTable.cellWidget(1, 0)
+        sliderLeft.valueChanged.disconnect()
+        sliderRight.valueChanged.disconnect()
+        sliderLeft.setMaximum(sliderRight.getValue())
+        sliderRight.setMinimum(sliderLeft.getValue())
+        sliderLeft.valueChanged.connect(self.sliderValueChanged)
+        sliderRight.valueChanged.connect(self.sliderValueChanged)
+
+        # Interpolater
+        sliderLeft = self.interpolaterOptionsTable.cellWidget(1, 0)
+        sliderRight = self.interpolaterOptionsTable.cellWidget(2, 0)
+        sliderLeft.valueChanged.disconnect()
+        sliderRight.valueChanged.disconnect()
+        sliderLeft.setMaximum(sliderRight.getValue())
+        sliderRight.setMinimum(sliderLeft.getValue())
+        sliderLeft.valueChanged.connect(self.sliderValueChanged)
+        sliderRight.valueChanged.connect(self.sliderValueChanged)
+
+        # Smoother
+        slider1 = self.smootherOptionsTable.cellWidget(0, 0)
+        slider2 = self.smootherOptionsTable.cellWidget(1, 0)
+        slider2.valueChanged.disconnect()
+        slider2.setMaximum(min(slider1.getValue() - 1, 5))
+        slider2.valueChanged.connect(self.sliderValueChanged)
+
+    def sliderValueChanged(self):
+        self.updateSliderRanges()
+        self.updateUIs()
 
     def readPreprocessSwitch(self):
         preprocessorSwitch = []
@@ -813,10 +882,11 @@ class PreprocessSettingDialog(object):
     def convertTextList(
         self,
         textList: list,
-        ints: list[int] = [],
-        floats: list[int] = [],
-        bools: list[int] = [],
+        types: dict,
     ) -> list:
+        ints = types["ints"]
+        floats = types["floats"]
+        bools = types["bools"]
         for i in range(len(textList)):
             if i in ints:
                 textList[i] = int(textList[i])
@@ -829,40 +899,33 @@ class PreprocessSettingDialog(object):
 
     def changeOptionsFormat(self):
         # Preprocess Switch
-        bools = [i for i in range(5)]
-        textList = self.preprocessorSwitch
-        self.preprocessorSwitch = self.convertTextList(textList=textList, bools=bools)
-
-        # Filter
-        ints = [0, 3]
-        floats = [1, 2]
-        bools = [4]
-        self.filterOptions = self.convertTextList(
-            self.filterOptions, ints=ints, floats=floats, bools=bools
+        self.preprocessorSwitch = self.convertTextList(
+            self.preprocessorSwitch, self.preprocessorSwitchTypes
         )
 
-        # Cutoffer
-        floats = [i for i in range(3)]
-        self.cutofferOptions = self.convertTextList(self.cutofferOptions, floats=floats)
+        # Filter
+        self.filterOptions = self.convertTextList(self.filterOptions, self.filterTypes)
 
-        cutSection = (self.cutofferOptions[1], self.cutofferOptions[2])
-        self.cutofferOptions = [self.cutofferOptions[0], cutSection]
+        # Cutoffer
+        self.cutofferOptions = self.convertTextList(
+            self.cutofferOptions, self.cutofferTypes
+        )
+        cutSection = (self.cutofferOptions[0], self.cutofferOptions[1])
+        self.cutofferOptions = [cutSection]
 
         # Interpolater
-        ints = [3]
-        floats = [1, 2]
         self.interpolaterOptions = self.convertTextList(
-            self.interpolaterOptions, ints=ints, floats=floats
+            self.interpolaterOptions, self.interpolaterTypes
         )
 
         # Smoother
-        ints = [0, 1]
-        self.smootherOptions = self.convertTextList(self.smootherOptions, ints=ints)
+        self.smootherOptions = self.convertTextList(
+            self.smootherOptions, self.smootherTypes
+        )
 
         # Downsampler
-        floats = [0]
         self.downSamplerOptions = self.convertTextList(
-            self.downSamplerOptions, floats=floats
+            self.downSamplerOptions, self.downSamplerTypes
         )
 
         # Preprocessor Info
@@ -881,62 +944,53 @@ class PreprocessSettingDialog(object):
 
         # Filter
         filterOptions = []
-        for row in range(4):
-            item = self.filterOptionsTable.item(row, 0)
-            filterOptions.append(item.text())
-        checkbox = self.filterOptionsTable.cellWidget(4, 0)
-        filterOptions.append(checkbox.isChecked())
+        for row in range(3):
+            w = self.filterOptionsTable.cellWidget(row, 0)
+            filterOptions.append(str(w.getValue()))
+        checkbox = self.filterOptionsTable.cellWidget(3, 0)
+        filterOptions.append(str(checkbox.isChecked()))
 
-        ints = [0, 3]
-        floats = [1, 2]
-        self.filterOptions = self.convertTextList(
-            filterOptions, ints=ints, floats=floats
-        )
+        self.filterOptions = self.convertTextList(filterOptions, self.filterTypes)
 
         # Cutoffer
         cutofferOptions = []
-        for row in range(3):
-            item = self.cutofferOptionsTable.item(row, 0)
-            cutofferOptions.append(item.text())
+        for row in range(2):
+            w = self.cutofferOptionsTable.cellWidget(row, 0)
+            cutofferOptions.append(str(w.getValue()))
 
-        floats = [i for i in range(3)]
-        cutofferOptions = self.convertTextList(cutofferOptions, floats=floats)
+        cutofferOptions = self.convertTextList(cutofferOptions, self.cutofferTypes)
 
-        cutSection = (cutofferOptions[1], cutofferOptions[2])
-        self.cutofferOptions = [cutofferOptions[0], cutSection]
+        cutSection = (cutofferOptions[0], cutofferOptions[1])
+        self.cutofferOptions = [cutSection]
 
         # Interpolater
         interpolaterOptions = []
         combobox = self.interpolaterOptionsTable.cellWidget(0, 0)
         interpolaterOptions.append(combobox.currentText())
         for row in range(3):
-            item = self.interpolaterOptionsTable.item(row + 1, 0)
-            interpolaterOptions.append(item.text())
+            w = self.interpolaterOptionsTable.cellWidget(row + 1, 0)
+            interpolaterOptions.append(str(w.getValue()))
 
-        ints = [3]
-        floats = [1, 2]
         self.interpolaterOptions = self.convertTextList(
-            interpolaterOptions, ints=ints, floats=floats
+            interpolaterOptions, self.interpolaterTypes
         )
 
         # Smoother
         smootherOptions = []
         for row in range(2):
-            item = self.smootherOptionsTable.item(row, 0)
-            smootherOptions.append(item.text())
+            w = self.smootherOptionsTable.cellWidget(row, 0)
+            smootherOptions.append(str(w.getValue()))
 
-        ints = [0, 1]
-        self.smootherOptions = self.convertTextList(smootherOptions, ints=ints)
+        self.smootherOptions = self.convertTextList(smootherOptions, self.smootherTypes)
 
         # Downsampler
         downSamplerOptions = []
         for row in range(1):
-            item = self.downsamplerOptionsTable.item(row, 0)
-            downSamplerOptions.append(item.text())
+            w = self.downsamplerOptionsTable.cellWidget(row, 0)
+            downSamplerOptions.append(str(w.getValue()))
 
-        floats = [0]
         self.downSamplerOptions = self.convertTextList(
-            downSamplerOptions, floats=floats
+            downSamplerOptions, self.downSamplerTypes
         )
 
         # Preprocessor Info

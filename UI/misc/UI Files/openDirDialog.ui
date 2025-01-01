@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OpenDirDialog</class>
+ <widget class="QWidget" name="OpenDirDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>150</width>
+    <height>211</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>打开目录</string>
+  </property>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>131</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="ButtonsLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QPushButton" name="ResultButton">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>拟合结果目录</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="ExpDataButton">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>实验数据目录</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="ProcessedDataButton">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>预处理后数据目录</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="DRTDataButton">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>DRT数据目录</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>ResultButton</tabstop>
+  <tabstop>ExpDataButton</tabstop>
+  <tabstop>ProcessedDataButton</tabstop>
+  <tabstop>DRTDataButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>ResultButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OpenDirDialog</receiver>
+   <slot>openResultDir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>55</x>
+     <y>36</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>18</x>
+     <y>-9</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ProcessedDataButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OpenDirDialog</receiver>
+   <slot>openProcessedDataDir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>79</x>
+     <y>129</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ExpDataButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OpenDirDialog</receiver>
+   <slot>openExpDataDir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>77</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-4</x>
+     <y>111</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>DRTDataButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OpenDirDialog</receiver>
+   <slot>openDRTDataDir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>86</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-2</x>
+     <y>164</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>openResultDir()</slot>
+  <slot>openProcessedDataDir()</slot>
+  <slot>openExpDataDir()</slot>
+  <slot>openDRTDataDir()</slot>
+ </slots>
+</ui>

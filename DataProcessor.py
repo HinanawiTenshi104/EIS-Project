@@ -256,7 +256,7 @@ def GenerateWeight(
 
 
 def FilterData(data: np.ndarray, filterOptions: list) -> np.ndarray:
-    windowSize, threshold, dthreshold, counts, deleteAboveZero = filterOptions
+    windowSize, threshold, counts, deleteAboveZero = filterOptions
 
     centerIndex = windowSize // 2
     # 删掉虚部大于0的数据
@@ -281,22 +281,22 @@ def FilterData(data: np.ndarray, filterOptions: list) -> np.ndarray:
                 window = filteredData[i - centerIndex : i + centerIndex + 1]
 
             zs = window["impedance"]
-            dzs = GetDataDerivatives(window)
+            # dzs = GetDataDerivatives(window)
             z = zs[centerIndex]
-            dz = dzs[centerIndex]
+            # dz = dzs[centerIndex]
 
             # 去中心
             zs = np.delete(zs, centerIndex)
-            dzs = np.delete(dzs, centerIndex)
+            # dzs = np.delete(dzs, centerIndex)
 
             mean = np.mean(zs)
-            dmean = np.mean(dzs)
+            # dmean = np.mean(dzs)
             std = np.std(zs)
-            dstd = np.std(dzs)
+            # dstd = np.std(dzs)
             zScore = (z - mean) / std
-            dzScore = (dz - dmean) / dstd
+            # dzScore = (dz - dmean) / dstd
 
-            if (zScore > threshold) or (dzScore > dthreshold):
+            if zScore > threshold:  # or (dzScore > dthreshold):
                 mask[i] = False
 
         filteredData = filteredData[mask]
@@ -354,29 +354,12 @@ def DownSampleData(data: np.ndarray, downSampleOptions: list) -> np.ndarray:
 
 
 def CutoffData(data: np.ndarray, cutoffOptions: list):
-    rejectDistance, cutSection = cutoffOptions
+    cutSection = cutoffOptions[0]
 
-    fs = data["frequency"]
-    zs = data["impedance"]
-    dataLen = data.shape[0]
+    cutoffData = np.copy(data)
 
-    zPoints = np.array([[z.real, z.imag] for z in zs])
-
-    tree = KDTree(zPoints)
-
-    cutoffData = []
-    for i in range(dataLen):
-        neighbors = tree.query_ball_point(zPoints[i], rejectDistance)
-
-        if len(neighbors) > 1:
-            cutoffData.append((fs[i], zs[i]))
-        else:
-            break
-
-    cutoffData = np.array(cutoffData, dtype=IO.dataDtype)
-
-    leftBound = int(len(cutoffData) * cutSection[0])
-    rightBound = int(len(cutoffData) * cutSection[1])
+    leftBound = int(len(cutoffData) * cutSection[0] / 100)
+    rightBound = int(len(cutoffData) * cutSection[1] / 100)
     cutoffData = cutoffData[leftBound:rightBound]
 
     return cutoffData
@@ -418,7 +401,7 @@ def PreProcessDatas(
         smootherOptions,
         downSamplerOptions,
     ) = preProcessorInfo
-    filterData, cutoffData, interpolateData, smoothData, downSampleData = (
+    filterData, interpolateData, smoothData, downSampleData, cutoffData = (
         preProcessorSwitch
     )
 
@@ -428,14 +411,14 @@ def PreProcessDatas(
 
         if filterData:
             processedData = FilterData(processedData, filterOptions)
-        if cutoffData:
-            processedData = CutoffData(processedData, cutofferOptions)
         if interpolateData:
             processedData = InterpolatedData(processedData, interpolaterOptions)
         if smoothData:
             processedData = SmoothData(processedData, smootherOptions)
         if downSampleData:
             processedData = DownSampleData(processedData, downSamplerOptions)
+        if cutoffData:
+            processedData = CutoffData(processedData, cutofferOptions)
 
         processedDatas.append(processedData)
 
@@ -500,10 +483,10 @@ def GeneratePreProcessorInfo(preProcessorInfo: list):
     (
         preProcessorSwitch,
         filterOptions,
-        cutofferOptions,
         interpolaterOptions,
         smootherOptions,
         downSamplerOptions,
+        cutofferOptions,
     ) = preProcessorInfo
     resultText = f"\nPre Processor Info:\n"
 
@@ -512,20 +495,20 @@ def GeneratePreProcessorInfo(preProcessorInfo: list):
     )
     resultText += f"Pre Processor Switch:\n"
     resultText += f"\tFilter: {filterData}\n"
-    resultText += f"\tCutoffer: {cutoffData}\n"
     resultText += f"\tInterpolater: {interpolateData}\n"
     resultText += f"\tSmoother: {smoothData}\n"
     resultText += f"\tDownSampler: {downSampleData}\n"
+    resultText += f"\tCutoffer: {cutoffData}\n"
 
     if filterData:
         resultText += f"Filter Options: {filterOptions}\n"
-    if cutoffData:
-        resultText += f"Cutoffer Options: {cutofferOptions}\n"
     if interpolateData:
         resultText += f"Interpolater Options: {interpolaterOptions}\n"
     if smoothData:
         resultText += f"Smoother Options: {smootherOptions}\n"
     if downSampleData:
         resultText += f"DownSampler Options: {downSamplerOptions}\n"
+    if cutoffData:
+        resultText += f"Cutoffer Options: {cutofferOptions}\n"
 
     return resultText

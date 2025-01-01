@@ -1129,18 +1129,31 @@
      <widget class="QWidget" name="layoutWidget_3">
       <property name="geometry">
        <rect>
-        <x>390</x>
+        <x>369</x>
         <y>530</y>
-        <width>404</width>
+        <width>421</width>
         <height>61</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="ResultBottomButtons">
        <item>
+        <widget class="QPushButton" name="ResultOpenDirButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>打开目录</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="ResultPreviousDataButton">
          <property name="minimumSize">
           <size>
-           <width>130</width>
+           <width>100</width>
            <height>50</height>
           </size>
          </property>
@@ -1153,7 +1166,7 @@
         <widget class="QPushButton" name="ResultNextDataButton">
          <property name="minimumSize">
           <size>
-           <width>130</width>
+           <width>100</width>
            <height>50</height>
           </size>
          </property>
@@ -1166,7 +1179,7 @@
         <widget class="QPushButton" name="ResultNextButton">
          <property name="minimumSize">
           <size>
-           <width>130</width>
+           <width>100</width>
            <height>50</height>
           </size>
          </property>
@@ -1431,6 +1444,7 @@
   <tabstop>ResultDiagramRightButton</tabstop>
   <tabstop>ResultDiagramUpButton</tabstop>
   <tabstop>ResultDiagramDownButton</tabstop>
+  <tabstop>ResultOpenDirButton</tabstop>
   <tabstop>ResultPreviousDataButton</tabstop>
   <tabstop>ResultNextDataButton</tabstop>
   <tabstop>ResultNextButton</tabstop>
@@ -1716,8 +1730,8 @@
    <slot>resultPreviousDataButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>462</x>
-     <y>557</y>
+     <x>548</x>
+     <y>562</y>
     </hint>
     <hint type="destinationlabel">
      <x>436</x>
@@ -1901,6 +1915,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>ResultOpenDirButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openOpenDirDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>418</x>
+     <y>564</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-4</x>
+     <y>503</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>openProgramSettingDialog()</slot>
@@ -1931,5 +1961,6 @@
   <slot>processSettingMethodSelectAllCheckBoxClicked()</slot>
   <slot>openModelSettingDialog()</slot>
   <slot>preprocessDataCheckboxClicked()</slot>
+  <slot>openOpenDirDialog()</slot>
  </slots>
 </ui>

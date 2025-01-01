@@ -19,6 +19,7 @@ import Model
 import Optimizer
 
 from .ModelSettings import ModelSettingsDialog
+from .OpenDirDialog import OpenDirDialog
 from .PreprocessSetting import PreprocessSettingDialog
 from .ProcessDataThread import ProcessDataThread
 from .ProgramSettings import ProgramSettingsDialog
@@ -701,23 +702,27 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ResultTitle.setWordWrap(True)
         self.ResultTitle.setObjectName("ResultTitle")
         self.layoutWidget_3 = QtWidgets.QWidget(parent=self.Results)
-        self.layoutWidget_3.setGeometry(QtCore.QRect(390, 530, 404, 61))
+        self.layoutWidget_3.setGeometry(QtCore.QRect(369, 530, 421, 61))
         self.layoutWidget_3.setObjectName("layoutWidget_3")
         self.ResultBottomButtons = QtWidgets.QHBoxLayout(self.layoutWidget_3)
         self.ResultBottomButtons.setContentsMargins(0, 0, 0, 0)
         self.ResultBottomButtons.setObjectName("ResultBottomButtons")
+        self.ResultOpenDirButton = QtWidgets.QPushButton(parent=self.layoutWidget_3)
+        self.ResultOpenDirButton.setMinimumSize(QtCore.QSize(100, 50))
+        self.ResultOpenDirButton.setObjectName("ResultOpenDirButton")
+        self.ResultBottomButtons.addWidget(self.ResultOpenDirButton)
         self.ResultPreviousDataButton = QtWidgets.QPushButton(
             parent=self.layoutWidget_3
         )
-        self.ResultPreviousDataButton.setMinimumSize(QtCore.QSize(130, 50))
+        self.ResultPreviousDataButton.setMinimumSize(QtCore.QSize(100, 50))
         self.ResultPreviousDataButton.setObjectName("ResultPreviousDataButton")
         self.ResultBottomButtons.addWidget(self.ResultPreviousDataButton)
         self.ResultNextDataButton = QtWidgets.QPushButton(parent=self.layoutWidget_3)
-        self.ResultNextDataButton.setMinimumSize(QtCore.QSize(130, 50))
+        self.ResultNextDataButton.setMinimumSize(QtCore.QSize(100, 50))
         self.ResultNextDataButton.setObjectName("ResultNextDataButton")
         self.ResultBottomButtons.addWidget(self.ResultNextDataButton)
         self.ResultNextButton = QtWidgets.QPushButton(parent=self.layoutWidget_3)
-        self.ResultNextButton.setMinimumSize(QtCore.QSize(130, 50))
+        self.ResultNextButton.setMinimumSize(QtCore.QSize(100, 50))
         self.ResultNextButton.setObjectName("ResultNextButton")
         self.ResultBottomButtons.addWidget(self.ResultNextButton)
         self.ResultDiagram = QtWidgets.QLabel(parent=self.Results)
@@ -850,6 +855,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ProcessSettingEditCircuitButton.clicked.connect(MainWindow.openModelSettingDialog)  # type: ignore
         self.ShowPreprocessOptionsButton.clicked.connect(MainWindow.openPreprocessSettingDialog)  # type: ignore
         self.PreprocessDataCheckBox.clicked.connect(MainWindow.preprocessDataCheckboxClicked)  # type: ignore
+        self.ResultOpenDirButton.clicked.connect(MainWindow.openOpenDirDialog)  # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.ReadDataButton, self.ProgramSettingButton)
         MainWindow.setTabOrder(self.ProgramSettingButton, self.ExitButton)
@@ -904,9 +910,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ResultDiagramRightButton, self.ResultDiagramUpButton
         )
         MainWindow.setTabOrder(self.ResultDiagramUpButton, self.ResultDiagramDownButton)
-        MainWindow.setTabOrder(
-            self.ResultDiagramDownButton, self.ResultPreviousDataButton
-        )
+        MainWindow.setTabOrder(self.ResultDiagramDownButton, self.ResultOpenDirButton)
+        MainWindow.setTabOrder(self.ResultOpenDirButton, self.ResultPreviousDataButton)
         MainWindow.setTabOrder(self.ResultPreviousDataButton, self.ResultNextDataButton)
         MainWindow.setTabOrder(self.ResultNextDataButton, self.ResultNextButton)
 
@@ -977,6 +982,7 @@ class MainWindow(QtWidgets.QMainWindow):
             _translate("MainWindow", "当前数据：HinanawiTenshi.txt")
         )
         self.ResultTitle.setText(_translate("MainWindow", "XXX拟合结果："))
+        self.ResultOpenDirButton.setText(_translate("MainWindow", "打开目录"))
         self.ResultPreviousDataButton.setText(_translate("MainWindow", "上一个数据"))
         self.ResultNextDataButton.setText(_translate("MainWindow", "下一个数据"))
         self.ResultNextButton.setText(_translate("MainWindow", "返回主界面"))
@@ -1577,6 +1583,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ringCounts[self.processSettingDataIndex] = (
                 self.RingCountSpinBox.value()
             )
+            self.modelSettingDialog.ringCounts = self.ringCounts
+            self.modelSettingDialog.emitCircuits()
             # print(self.ringCounts)
 
     def updateCircuitName(self):
@@ -1930,6 +1938,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.pageInitializing = True
 
+        self.openDirDialog = OpenDirDialog()
+        self.openDirDialog.dirs = IO.dirs
+
         thread = self.processDataThread
         resultDir = IO.dirs["Result Dir"]
 
@@ -2130,6 +2141,9 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.resultMethodTierListIndex < len(thread.methodList) - 1:
             self.resultMethodTierListIndex += 1
             self.updateResultPage()
+
+    def openOpenDirDialog(self):
+        self.openDirDialog.show()
 
     def resultPreviousDataButtonClicked(self):
         if self.resultDataIndex > 0:
